@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 import db from './config/db'
 
 import apiRoute from './routes/api.route'
+import uploadRoute from './routes/upload.route'
 
 class Server {
   public app: express.Application
@@ -36,6 +37,7 @@ class Server {
     const app: express.Application = this.app
 
     app.use('/v1/api', apiRoute)
+    app.use('/', uploadRoute)
   }
 
   /** db connecting **/

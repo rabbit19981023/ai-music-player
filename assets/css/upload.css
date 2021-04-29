@@ -1,0 +1,21 @@
+h2,
+label {
+  color: #FFFFFF;
+  opacity: 87%;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+form > div {
+  display: flex;
+  align-items: center;
+  width: min-content;
+  white-space: nowrap;
+  margin: 15px 0;
+}
+
+button {
+  margin-top: 15px;
+}
