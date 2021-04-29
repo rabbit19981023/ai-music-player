@@ -9,7 +9,7 @@ export default {
       const types: JSON = await result.json()
 
       return res.json(types)
-    } catch (err) { return res.json({ status: 500 })}
+    } catch (err) { return res.json({ status: 500 }) }
   },
 
   // GET '/v1/api/types-with-imgs/all'
@@ -19,7 +19,7 @@ export default {
       const typesWithImgs: JSON = await result.json()
 
       return res.json(typesWithImgs)
-    } catch (err) {return res.json({ status: 500 })}
+    } catch (err) { return res.json({ status: 500 }) }
   },
 
   // GET '/v1/api/tones/all'

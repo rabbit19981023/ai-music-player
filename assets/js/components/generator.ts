@@ -101,5 +101,19 @@ export default class {
         `)
       }
     } catch (err) { }
+
+    try {
+      const response = await fetch('/v1/api/tones/all')
+      const allTones = await response.json()
+
+      const toneSelector = this.element.querySelector('#tone') || { innerHTML: '' }
+      for (let i in allTones) {
+        const tone: string = allTones[i].info
+
+        toneSelector.innerHTML += (`
+          <option value="${i}">${tone}</option>
+        `)
+      }
+    } catch (err) { }
   }
 }
