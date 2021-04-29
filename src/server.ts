@@ -24,11 +24,11 @@ class Server {
     dotenv.config()
 
     app.use(morgan('dev'))
-    app.use(express.static(path.resolve(__dirname, '../assets')))
-    app.use(express.static(path.resolve(__dirname, '../assets/html')))
-    app.use(express.static(path.resolve(__dirname, './assets')))
+    app.use(express.static(path.resolve(__dirname, '../assets'))) // serve css/imgs/fonts files
+    app.use(express.static(path.resolve(__dirname, '../assets/html'))) // serve html files
+    app.use(express.static(path.resolve(__dirname, './assets'))) // serve js files
     app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
+    app.use(express.urlencoded({ extended: true })) // parsing form data
   }
 
   /** routes **/

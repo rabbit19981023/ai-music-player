@@ -13,16 +13,16 @@ export default class {
     typesWrapper.classList.add('.types-wrapper')
 
     try {
-      const response = await fetch('/v1/api/types/all')
-      const types: JSON = await response.json()
+      const response = await fetch('/v1/api/types-with-imgs/all')
+      const typesWithImgs = await response.json()
 
-      for (let i in types) {
-        const type: string = types[i]
+      for (let i in typesWithImgs) {
+        const data = typesWithImgs[i]
 
         typesWrapper.innerHTML += (`
           <div class="card">
-            <img class="card-img" src="https://picsum.photos/150?blur=2">
-            <p class="card-info">${type}</p>
+            <img class="card-img" src="${data.image}">
+            <p class="card-info">${data.info}</p>
           </div>
         `)
       }

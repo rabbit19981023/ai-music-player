@@ -1,14 +1,23 @@
+h2 {
+  color: #FFFFFF;
+  opacity: 87%;
+  padding-bottom: 10px;
+  border-bottom: 2.5px solid #00FF00;
+  border-radius: 1.5px;
+}
+
 .types-wrapper {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   margin: -5px;
+  margin-top: 0px;
 }
 
 .card {
   align-items: center;
   width: 130px;
-  height: 160px;
+  height: 130px;
   margin: 5px;
   background-color: transparent;
   padding: 3px;
@@ -17,7 +26,7 @@
 
 .card-info {
   font-weight: 550;
-  margin-top: 3px;
+  margin-top: 10px;
   color: #FFFFFF;
   opacity: 87%;
 }

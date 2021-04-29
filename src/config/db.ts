@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 export default {
   connect: async function () {
     try {
-      await mongoose.connect(process.env.MONGODB_URI || '', {
+      await mongoose.connect(process.env.MONGODB_URI || 'Not Find URI in ENV !!', {
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true

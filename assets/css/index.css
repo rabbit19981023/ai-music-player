@@ -10,10 +10,3 @@ body {
 .form-select {
   width: auto;
 }
-
-h2 {
-  color: #FFFFFF;
-  opacity: 87%;
-  padding-bottom: 5px;
-  border-bottom: 2px solid rgba(255, 255, 255, 38%);
-}

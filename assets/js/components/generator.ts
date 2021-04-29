@@ -8,7 +8,7 @@ export default class {
     this.build()
   }
 
-  private build () {
+  private async build () {
     const autoNumbers = document.createElement('div')
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
@@ -27,11 +27,11 @@ export default class {
     `)
     this.element.appendChild(advanceBtnDiv)
 
-    const advanceBtn = advanceBtnDiv.querySelector('.advance-btn')
+    const advanceBtn = this.element.querySelector('.advance-btn') || { addEventListener: function () {} }
     const displayForm = function () {
       advanceForm.classList.add('toggle')
     }
-    advanceBtn.onclick = displayForm
+    advanceBtn.addEventListener('click', displayForm)
 
     const advanceForm = document.createElement('div')
     advanceForm.classList.add('advance-form')
@@ -43,12 +43,14 @@ export default class {
 
       <div>
         <label for="type">類別：</label>
-        <select id="type" name="type" class="form-select"></select>
+        <select id="type" name="type" class="form-select">
+          <option value="">請選擇類別</option>
+        </select>
       </div>
 
       <div>
         <label for="keywords">關鍵字：</label>
-        <input type="text" id="keywords">
+        <input type="text" id="keywords" name="keywords" size="10" max="20">
       </div>
 
       <div>
@@ -60,9 +62,25 @@ export default class {
 
       <div>
         <label for="tone">調性：</label>
-        <select id="tone" name="tone" class="form-select"></select>
+        <select id="tone" name="tone" class="form-select">
+          <option value="">請選擇調性</option>
+        </select>
       </div>
     `)
     this.element.appendChild(advanceForm)
+
+    try {
+      const response = await fetch('/v1/api/types/all')
+      const allTypes = await response.json()
+
+      const typeSelect = this.element.querySelector('#type') || { innerHTML: '' }
+      for (let i in allTypes) {
+        const type: string = allTypes[i]
+
+        typeSelect.innerHTML += (`
+          <option value="${i}">${type}</option>
+        `)
+      }
+    } catch (err) { }
   }
 }

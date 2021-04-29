@@ -1,10 +1,10 @@
 import Generator from './components/generator.js'
-import TypesAll from './components/typesAll.js'
+import TypesWithImgs from './components/typesWithImgs.js'
 
 const container: HTMLElement = document.querySelector('.container') || document.createElement('div')
 
-const generator = new Generator('generator').element
-const typesAll = new TypesAll('types-all').element
+const generator: HTMLElement = new Generator('generator').element
+const typesWithImgs: HTMLElement = new TypesWithImgs('types-all').element
 
 container.appendChild(generator)
-container.appendChild(typesAll)
+container.appendChild(typesWithImgs)
