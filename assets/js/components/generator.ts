@@ -16,14 +16,14 @@ export default class {
         <label for="auto-numbers">歌曲數量：</label>
         <input id="auto-numbers" type="number" name="auto_numbers" class="form-control" value="4" min="2" max="20">
 
-        <button type="submit" class="btn btn-primary">自動產生</button>
+        <button type="submit" class="btn btn-outline-primary">自動產生</button>
       </form>
     `)
     this.element.appendChild(autoNumbers)
 
     const advanceBtnDiv = document.createElement('div')
     advanceBtnDiv.innerHTML = (`
-      <button type="button" class="btn btn-primary advance-btn">進階產生</button>
+      <button type="button" class="btn btn-outline-success advance-btn">進階產生</button>
     `)
     this.element.appendChild(advanceBtnDiv)
 
@@ -64,7 +64,7 @@ export default class {
         </div>
 
         <center>
-          <button type="submit" class="btn btn-primary">產生歌單</button>
+          <button type="submit" class="btn btn-outline-success">產生歌單</button>
         </center>
       </form>
     `)

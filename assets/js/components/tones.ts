@@ -9,16 +9,16 @@ export default class {
   }
 
   private async build () {
-    const typesWrapper = document.createElement('div')
+    const tonesWrapper = document.createElement('div')
 
     try {
-      const response = await fetch('/v1/api/types-with-imgs/all')
-      const typesWithImgs = await response.json()
+      const response = await fetch('/v1/api/tones/all')
+      const tones = await response.json()
 
-      for (let i in typesWithImgs) {
-        const data = typesWithImgs[i]
+      for (let i in tones) {
+        const data = tones[i]
 
-        typesWrapper.innerHTML += (`
+        tonesWrapper.innerHTML += (`
           <div class="card">
             <img class="card-img" src="${data.image}">
             <p class="card-info">${data.info}</p>
@@ -27,14 +27,14 @@ export default class {
       }
 
       this.element.innerHTML = (`
-        <h2>詩歌類別</h2>
-        <div class="types-wrapper">
-          ${typesWrapper.innerHTML}
+        <h2>調性</h2>
+        <div class="tones-wrapper">
+          ${tonesWrapper.innerHTML}
         </div>
       `)
     } catch (err) {
       this.element.innerHTML = (`
-        <h2>詩歌類別</h2>
+        <h2>調性</h2>
         <div class="error"></div>
       `)
     }

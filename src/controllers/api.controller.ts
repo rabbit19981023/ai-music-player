@@ -20,5 +20,35 @@ export default {
 
       return res.json(typesWithImgs)
     } catch (err) {return res.json({ status: 500 })}
+  },
+
+  // GET '/v1/api/tones/all'
+  allTones: function (req: Request, res: Response) {
+    const infos: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    const images: string[] = [
+      '/img/C.png',
+      '/img/C.png',
+      '/img/D.png',
+      '/img/D.png',
+      '/img/E.png',
+      '/img/F.png',
+      '/img/F.png',
+      '/img/G.png',
+      '/img/G.png',
+      '/img/A.png',
+      '/img/A.png',
+      '/img/B.png',
+      '/img/C.png'
+    ]
+
+    const tones = {}
+    for (let i = 0; i < infos.length; i++) {
+      tones[i] = {
+        info: infos[i],
+        image: images[i]
+      }
+    }
+
+    return res.json(tones)
   }
 }

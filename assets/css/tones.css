@@ -1,0 +1,15 @@
+.tones-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 576px) {
+  h2 {
+    margin-left: 5px;
+  }
+
+  .tones-wrapper {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}

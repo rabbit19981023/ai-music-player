@@ -34,8 +34,9 @@ span {
   transform: translate(-50%, -50%) scale(0.5);
   padding: 30px;
   background-color: #121212;
-  border: 1px solid rgba(255, 255, 255, 38%);
+  border: 1.5px solid rgba(255, 255, 255, 38%);
   border-radius: 5px;
+  box-shadow: 3px 3px 15px rgba(255, 255, 255, 38%);
   overflow-y: hidden;
   white-space: nowrap;
   transition: 0.25s;
