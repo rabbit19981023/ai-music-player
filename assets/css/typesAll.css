@@ -14,6 +14,23 @@ h2 {
   margin-top: 0px;
 }
 
+@media screen and (max-width: 576px) {
+  h2 {
+    margin-left: 5px;
+  }
+
+  .types-wrapper {
+    justify-content: normal;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .card {
+    min-width: 130px;
+    min-height: 130px;
+  }
+}
+
 .card {
   align-items: center;
   width: 130px;
