@@ -9,11 +9,18 @@ export default class {
   }
 
   private async build () {
-    const tonesWrapper = document.createElement('div')
+    const tonesWrapper: HTMLElement = document.createElement('div')
 
     try {
+      interface ApiData {
+        [i: string]: {
+          info: string,
+          image: string
+        }
+      }
+
       const response = await fetch('/v1/api/tones/all')
-      const tones = await response.json()
+      const tones: ApiData = await response.json()
 
       for (let i in tones) {
         const data = tones[i]

@@ -9,7 +9,7 @@ export default class {
   }
 
   private async build () {
-    const autoNumbers = document.createElement('div')
+    const autoNumbers: HTMLElement = document.createElement('div')
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
       <form action="/auto-generate" method="POST" class="auto-form">
@@ -21,13 +21,13 @@ export default class {
     `)
     this.element.appendChild(autoNumbers)
 
-    const advanceBtnDiv = document.createElement('div')
+    const advanceBtnDiv: HTMLElement = document.createElement('div')
     advanceBtnDiv.innerHTML = (`
       <button type="button" class="btn btn-outline-success advance-btn">進階產生</button>
     `)
     this.element.appendChild(advanceBtnDiv)
 
-    const formWrapper = document.createElement('div')
+    const formWrapper: HTMLElement = document.createElement('div')
     formWrapper.innerHTML = (`
       <form action="/advance-generate" method="POST" class="advance-form">
         <span class="close-btn"></span>
@@ -70,14 +70,14 @@ export default class {
     `)
     this.element.appendChild(formWrapper)
 
-    const advanceBtn = this.element.querySelector('.advance-btn') || { addEventListener: function () {} }
-    const advanceForm = this.element.querySelector('.advance-form') || { classList: { add: function () {}, remove: function () {} } }
+    const advanceBtn: HTMLElement = this.element.querySelector('.advance-btn') as HTMLElement
+    const advanceForm: HTMLElement = this.element.querySelector('.advance-form') as HTMLElement
     const displayForm = function () {
       advanceForm.classList.add('toggle')
     }
     advanceBtn.addEventListener('click', displayForm)
 
-    const closeBtn = this.element.querySelector('.close-btn') || { addEventListener: function () {} }
+    const closeBtn: HTMLElement = this.element.querySelector('.close-btn') as HTMLElement
     const closeForm = function () {
       advanceForm.classList.remove('toggle')
     }
@@ -89,10 +89,15 @@ export default class {
     })
 
     try {
-      const response = await fetch('/v1/api/types/all')
-      const allTypes = await response.json()
+      interface ApiData {
+        [i: string]: string
+      }
 
-      const typeSelect = this.element.querySelector('#type') || { innerHTML: '' }
+      const response = await fetch('/v1/api/types/all')
+      const allTypes: ApiData = await response.json()
+
+      const typeSelect: HTMLElement = this.element.querySelector('#type') as HTMLElement
+
       for (let i in allTypes) {
         const type: string = allTypes[i]
 
@@ -103,10 +108,17 @@ export default class {
     } catch (err) { }
 
     try {
-      const response = await fetch('/v1/api/tones/all')
-      const allTones = await response.json()
+      interface ApiData {
+        [i: string]: {
+          info: string,
+          image: string
+        }
+      }
 
-      const toneSelector = this.element.querySelector('#tone') || { innerHTML: '' }
+      const response = await fetch('/v1/api/tones/all')
+      const allTones: ApiData = await response.json()
+
+      const toneSelector: HTMLElement = this.element.querySelector('#tone') as HTMLElement
       for (let i in allTones) {
         const tone: string = allTones[i].info
 

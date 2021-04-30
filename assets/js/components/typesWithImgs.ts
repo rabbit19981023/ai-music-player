@@ -9,11 +9,18 @@ export default class {
   }
 
   private async build () {
-    const typesWrapper = document.createElement('div')
+    const typesWrapper: HTMLElement = document.createElement('div')
 
     try {
+      interface ApiData {
+        [i: string]: {
+          info: string,
+          image: string
+        }
+      }
+
       const response = await fetch('/v1/api/types-with-imgs/all')
-      const typesWithImgs = await response.json()
+      const typesWithImgs: ApiData = await response.json()
 
       for (let i in typesWithImgs) {
         const data = typesWithImgs[i]

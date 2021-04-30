@@ -1,17 +1,5 @@
-const getAllTypes = async function () {
-  try {
-    const response = await fetch('/v1/api/types/all')
-    const types = await response.json()
+import createTypeSelect from './components/helpers/typeSelect.js'
 
-    const typeSelect = document.querySelector('#type') || { innerHTML: '' }
-    for (let i in types) {
-      const type: string = types[i]
+const typeSelect: HTMLElement = document.querySelector('#type') as HTMLElement
 
-      typeSelect.innerHTML += (`
-        <option value="${i}">${type}</option>
-      `)
-    }
-  } catch (err) { }
-}
-
-getAllTypes()
+createTypeSelect(typeSelect)

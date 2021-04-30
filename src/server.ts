@@ -1,16 +1,21 @@
+/** NPM Modules **/
 import express from 'express'
 import path from 'path'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
 
+/** Custom Libraries **/
 import db from './config/db'
 
+/** Routes **/
 import apiRoute from './routes/api.route'
 import uploadRoute from './routes/upload.route'
 
+/** Main Express App **/
 class Server {
   public app: express.Application
 
+  /** Initializer **/
   constructor () {
     this.app = express()
     this.config()
@@ -18,7 +23,7 @@ class Server {
     this.connectDb()
   }
 
-  /** app settings **/
+  /** App Settings **/
   private config (): void {
     const app: express.Application = this.app
 
