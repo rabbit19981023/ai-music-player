@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./build/server.js",
     "start-dev": "nodemon ./build/server.js",
+    "postinstall": "tsc",
     "build": "tsc --project tsconfig.frontend.json & tsc --project tsconfig.server.json",
     "build-frontend": "tsc --project tsconfig.frontend.json",
     "build-server": "tsc --project tsconfig.server.json"
