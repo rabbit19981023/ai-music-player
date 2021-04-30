@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import fetch from 'node-fetch'
+import axios from 'axios'
 
 export default {
   // GET '/v1/api/types/all'
@@ -26,8 +27,8 @@ export default {
         }
       }
 
-      const result = await fetch('http://163.18.42.232:8000/types_img')
-      const typesWithImgs: ApiData = await result.json()
+      const result = await axios.get('http://163.18.42.232:8000/types_img')
+      const typesWithImgs: ApiData = await result.data
       
       return res.json(typesWithImgs)
     } catch (err) { return res.json({ status: 500 }) }
