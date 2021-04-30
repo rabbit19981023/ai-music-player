@@ -1,3 +1,5 @@
+import createTypeSelect from './helpers/typeSelect.js'
+
 export default class {
   public element: HTMLElement
 
@@ -88,24 +90,8 @@ export default class {
       }
     })
 
-    try {
-      type ApiData = {
-        [i: string]: string
-      }
-
-      const response = await fetch('/v1/api/types/all')
-      const allTypes: ApiData = await response.json()
-
-      const typeSelect: HTMLElement = this.element.querySelector('#type') as HTMLElement
-
-      for (let i in allTypes) {
-        const type: string = allTypes[i]
-
-        typeSelect.innerHTML += (`
-          <option value="${i}">${type}</option>
-        `)
-      }
-    } catch (err) { }
+    const typeSelect: HTMLElement = this.element.querySelector('#type') as HTMLElement
+    createTypeSelect(typeSelect)
 
     try {
       type ApiData = {
