@@ -1,6 +1,6 @@
 export default async function (selectNode: HTMLElement) {
   try {
-    interface ApiData {
+    type ApiData = {
       [i: string]: string
     }
 

@@ -14,7 +14,7 @@ export default class {
     autoNumbers.innerHTML = (`
       <form action="/auto-generate" method="POST" class="auto-form">
         <label for="auto-numbers">歌曲數量：</label>
-        <input id="auto-numbers" type="number" name="auto_numbers" class="form-control" value="4" min="2" max="20">
+        <input type="number" name="auto_numbers" id="auto-numbers" class="form-control" value="4" min="2" max="20">
 
         <button type="submit" class="btn btn-outline-primary">自動產生</button>
       </form>
@@ -34,19 +34,19 @@ export default class {
 
         <div>
           <label for="song-numbers">歌曲數量：</label>
-          <input type="number" id="song-numbers" name="song_numbers" class="form-control" value="4" min="2" max="20">
+          <input type="number" name="song_numbers" id="song-numbers" class="form-control" value="4" min="2" max="20">
         </div>
 
         <div>
           <label for="type">類別：</label>
-          <select id="type" name="type" class="form-select">
+          <select name="type" id="type" class="form-select">
             <option value="">請選擇類別</option>
           </select>
         </div>
 
         <div>
           <label for="keywords">關鍵字：</label>
-          <input type="text" id="keywords" name="keywords" size="10" max="20">
+          <input type="text" name="keywords" id="keywords" size="15" max="20">
         </div>
 
         <div class="speed-wrapper">
@@ -58,7 +58,7 @@ export default class {
 
         <div>
           <label for="tone">調性：</label>
-          <select id="tone" name="tone" class="form-select">
+          <select name="tone" id="tone" class="form-select">
             <option value="">請選擇調性</option>
           </select>
         </div>
@@ -89,7 +89,7 @@ export default class {
     })
 
     try {
-      interface ApiData {
+      type ApiData = {
         [i: string]: string
       }
 
@@ -108,7 +108,7 @@ export default class {
     } catch (err) { }
 
     try {
-      interface ApiData {
+      type ApiData = {
         [i: string]: {
           info: string,
           image: string

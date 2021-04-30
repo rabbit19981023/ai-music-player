@@ -12,7 +12,7 @@ export default class {
     const tonesWrapper: HTMLElement = document.createElement('div')
 
     try {
-      interface ApiData {
+      type ApiData = {
         [i: string]: {
           info: string,
           image: string

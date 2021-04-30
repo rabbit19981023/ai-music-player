@@ -11,9 +11,13 @@ h2 {
 form > div {
   display: flex;
   align-items: center;
-  width: min-content;
-  white-space: nowrap;
+  width: max-content;
   margin: 15px 0;
+}
+
+textarea,
+input[type="text"] {
+  max-width: 95%;
 }
 
 button {
