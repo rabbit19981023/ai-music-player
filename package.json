@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node ./build/server.js",
     "start-dev": "nodemon ./build/server.js",
-    "tsc": "tsc",
-    "postinstall": "npm install typescript && npm run tsc",
+    "postinstall": "npm install typescript && npm run build-full",
     "build-full": "tsc --project tsconfig.frontend.json & tsc --project tsconfig.server.json",
     "build-frontend": "tsc --project tsconfig.frontend.json",
     "build-server": "tsc --project tsconfig.server.json"
