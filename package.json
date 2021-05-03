@@ -9,7 +9,9 @@
     "build": "npm install typescript && npm run build-full",
     "build-full": "tsc --project tsconfig.frontend.json & tsc --project tsconfig.server.json",
     "build-frontend": "tsc --project tsconfig.frontend.json",
-    "build-server": "tsc --project tsconfig.server.json"
+    "build-frontend-dev": "yarn run build-frontend --watch",
+    "build-server": "tsc --project tsconfig.server.json",
+    "build-server-dev": "yarn run build-server --watch"
   },
   "dependencies": {
     "@types/dotenv": "^8.2.0",

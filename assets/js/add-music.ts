@@ -1,8 +1,3 @@
-import createTypeSelect from './components/helpers/typeSelect.js'
-
-const typeSelect: HTMLElement = document.querySelector('#type') as HTMLElement
-createTypeSelect(typeSelect)
-
 const createUploadEvent = function () {
   const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
   const formData: FormData = new FormData(form)
@@ -16,8 +11,10 @@ const createUploadEvent = function () {
         body: formData
       }
 
-      const response = await fetch('http://163.18.42.232:8000/add_train_data', config)
+      const response = await fetch('http://163.18.42.232:8000/add_music', config)
       const result = await response.json()
+
+      console.log(result)
 
       switch (result.Status) {
         case 'Done':
