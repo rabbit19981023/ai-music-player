@@ -28,7 +28,7 @@ export default {
 
       const result = await fetch('http://163.18.42.232:8000/types_img')
       const typesWithImgs: ApiData = await result.json()
-      
+
       return res.json(typesWithImgs)
     } catch (err) { return res.json({ status: 500 }) }
   },

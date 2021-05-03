@@ -19,7 +19,7 @@ export default class {
         }
       }
 
-      const response = await fetch('/v1/api/types-with-imgs/all')
+      const response = await fetch('http://163.18.42.232:8000/types_img') // nodejs server: '/v1/api/types-with-imgs/all'
       const typesWithImgs: ApiData = await response.json()
 
       for (let i in typesWithImgs) {
