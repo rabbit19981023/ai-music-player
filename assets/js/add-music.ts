@@ -5,12 +5,6 @@ const buildUpload = function () {
   const uploadBtn: HTMLElement = document.querySelector('#upload') as HTMLElement
 
   const upload = async function () {
-    // Disable default form onsubmit event
-    const disableSubmit = function (event: Event) {
-      event.preventDefault()
-    }
-    form.addEventListener('submit', disableSubmit)
-
     try {
       type ApiData = {
         Status: string
@@ -25,6 +19,8 @@ const buildUpload = function () {
       const response = await fetch('http://163.18.42.232:8000/add_music', config)
       const result: ApiData = await response.json()
 
+      console.log(result)
+      
       switch (result.Status) {
         case 'Done':
           window.alert('上傳成功！')
