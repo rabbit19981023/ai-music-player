@@ -1,4 +1,4 @@
-import createTypeSelect from './helpers/typeSelect.js'
+import createTypeSelect from '../helpers/typeSelect.js'
 
 export default class {
   public element: HTMLElement
