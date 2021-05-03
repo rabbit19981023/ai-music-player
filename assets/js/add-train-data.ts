@@ -1,4 +1,4 @@
-import createTypeSelect from './components/helpers/typeSelect.js'
+import createTypeSelect from './helpers/typeSelect.js'
 
 const buildTypeSelect = function () {
   const typeSelect: HTMLElement = document.querySelector('#type') as HTMLElement
