@@ -6,15 +6,13 @@ const buildTypeSelect = function () {
 }
 
 const buildUpload = function () {
-  const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
-  const formData: FormData = new FormData(form)
-
-  const uploadBtn: HTMLElement = document.querySelector('#upload') as HTMLElement
-
   const upload = async function () {
+    const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
+    const formData: FormData = new FormData(form)
+
     try {
       type ApiData = {
-        Status: string
+        status: string
       }
 
       const config = {
@@ -25,12 +23,14 @@ const buildUpload = function () {
       const response = await fetch('http://163.18.42.232:8000/add_train_data', config)
       const result: ApiData = await response.json()
 
-      switch (result.Status) {
+      switch (result.status) {
         case 'Done':
           window.alert('上傳成功！')
+          break
 
         case 'Error':
           window.alert('上傳失敗：請確認表單是否填寫錯誤！')
+          break
       }
 
       // Redirect
@@ -38,6 +38,7 @@ const buildUpload = function () {
     } catch (err) { }
   }
 
+  const uploadBtn: HTMLElement = document.querySelector('#upload') as HTMLElement
   uploadBtn.addEventListener('click', upload)
 }
 
