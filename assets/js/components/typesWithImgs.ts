@@ -34,14 +34,14 @@ export default class {
       }
 
       this.element.innerHTML = (`
-        <h2>詩歌類別</h2>
+        <h2>詩歌類別 - Hymn Genre</h2>
         <div class="types-wrapper">
           ${typesWrapper.innerHTML}
         </div>
       `)
     } catch (err) {
       this.element.innerHTML = (`
-        <h2>詩歌類別</h2>
+        <h2>詩歌類別 - Hymn Genre</h2>
         <div class="error"></div>
       `)
     }

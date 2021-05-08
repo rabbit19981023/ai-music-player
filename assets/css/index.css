@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap");
+
+* {
+  font-family: sans-serif;
+}
+
 html,
 body {
   width: 100%;
@@ -5,7 +11,11 @@ body {
 }
 
 body {
-  background-color: #121212;
+  background-image: url("https://cdn.pixabay.com/photo/2017/12/17/21/44/coffee-3025022_960_720.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed; /** 固定畫面 **/
+  background-size: cover; /** 覆蓋全頁面 **/
+  background-position: center; /** 圖片置中 **/
 }
 
 .container {

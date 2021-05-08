@@ -1,8 +1,9 @@
 h2 {
-  color: #FFFFFF;
-  opacity: 87%;
+  color: #2c4f54;
+  font-weight: 700;
+  text-shadow: 4px 4px 3px #c89932;
   padding-bottom: 10px;
-  border-bottom: 2.5px solid #00FF00;
+  border-bottom: 2.5px solid #2c4f54;
   border-radius: 1.5px;
 }
 
@@ -36,7 +37,7 @@ h2 {
   width: 130px;
   height: 130px;
   margin: 5px;
-  background-color: transparent;
+  background-color: #e4d28ba2; /** 最後兩碼代表顏色透明度 **/
   padding: 3px;
   border: 1px solid rgba(255, 255, 255, 38%);
 }
@@ -49,6 +50,12 @@ h2 {
 .card-info {
   font-weight: 550;
   margin-top: 10px;
-  color: #FFFFFF;
-  opacity: 87%;
+  color: #2c4f54;
+}
+
+.tone-img {
+  width: 50%;
+  height: 50%;
+  margin-top: 12px;
+  margin-bottom: 5px;
 }

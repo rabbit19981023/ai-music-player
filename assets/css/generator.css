@@ -1,7 +1,7 @@
 .generator {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
   white-space: nowrap;
   margin: -5px;
   margin-bottom: 15px;
@@ -13,8 +13,39 @@
 
 label,
 span {
-  color: #FFFFFF;
-  opacity: 87%;
+  color: #7a4171;
+}
+
+label {
+  text-shadow: 4px 4px 3px#deb068;
+  font-weight: 550;
+}
+
+.auto-numbers {
+  text-align: center;
+  padding: 3px 0px;
+}
+
+.btn-auto {
+  color: #80aba9;
+  padding: 3px 8px;
+  border: 1px solid #80aba9;
+}
+
+.btn-auto:hover {
+  color: #ffffff;
+  background-color: #80aba990;
+}
+
+.btn-advance {
+  color: #c89932;
+  padding: 3px 10px;
+  border: 1px solid #c89932;
+}
+
+.btn-advance:hover {
+  color: #ffffff;
+  background-color: #c8993290;
 }
 
 .auto-form {
@@ -34,7 +65,7 @@ span {
   left: 50%;
   transform: translate(-50%, -50%) scale(0.5);
   padding: 30px;
-  background-color: #121212;
+  background-color: #d8caaf;
   border: 1.5px solid rgba(255, 255, 255, 38%);
   border-radius: 5px;
   box-shadow: 3px 3px 15px rgba(255, 255, 255, 38%);
@@ -52,6 +83,7 @@ span {
 
 .advance-form .close-btn::after {
   content: 'x';
+  color: #7b8b6f;
   font-size: 20px;
   font-weight: 550;
   position: absolute;
@@ -67,6 +99,12 @@ span {
   margin-bottom: 15px;
 }
 
+.advance-label {
+  color: #656565;
+  text-shadow: none;
+  font-weight: 550;
+}
+
 .advance-form > div label {
   margin-right: 5px;
 }
@@ -77,4 +115,15 @@ span {
 
 .advance-form .speed-wrapper span:nth-of-type(2) {
   margin: 0 5px;
+}
+
+.btn-submit {
+  color: #7b8b6f;
+  font-weight: 550;
+  border: 1px solid #7b8b6f;
+}
+
+.btn-submit:hover {
+  color: #fff;
+  background-color: #7b8b6f;
 }
