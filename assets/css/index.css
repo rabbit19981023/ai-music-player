@@ -24,4 +24,5 @@ body {
 .form-control,
 .form-select {
   width: auto;
+  text-align: center;
 }

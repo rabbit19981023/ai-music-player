@@ -24,7 +24,6 @@
 }
 
 .auto-numbers {
-  text-align: center;
   padding: 3px 0px;
 }
 
@@ -94,7 +93,7 @@
 .advance-form .close-btn::after {
   content: 'x';
   color: #7b8b6f;
-  font-size: 20px;
+  font-size: 23px;
   font-weight: 550;
   position: absolute;
   top: 0px;

@@ -48,14 +48,14 @@ export default class {
 
         <div>
           <label for="keywords" class="advance-label">關鍵字：</label>
-          <input type="text" name="keywords" id="keywords" size="15" max="20">
+          <input type="text" name="keywords" id="keywords" class="form-control" size="15" max="20">
         </div>
 
         <div class="speed-wrapper">
           <span class="advance-label">速度：</span>
-          <input type="number" name="min_speed" value="80" min="40" max="160">
+          <input type="number" name="min_speed" class="form-control" value="80" min="40" max="160">
           <span> ~ </span>
-          <input type="number" name="max_speed" value="100" min="60" max="200">
+          <input type="number" name="max_speed" class="form-control" value="100" min="60" max="200">
         </div>
 
         <div>
