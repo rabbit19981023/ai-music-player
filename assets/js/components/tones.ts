@@ -26,10 +26,12 @@ export default class {
         const data = tones[i]
 
         tonesWrapper.innerHTML += (`
-          <div class="card">
-            <img class="card-img tone-img" src="${data.image}">
-            <p class="card-info">${data.info}</p>
-          </div>
+          <a href="/v1/api/tones?query=${data.info}">
+            <div class="card">
+              <img class="card-img tone-img" src="${data.image}">
+              <p class="card-info">${data.info}</p>
+            </div>
+          </a>
         `)
       }
 

@@ -26,10 +26,12 @@ export default class {
         const data = typesWithImgs[i]
 
         typesWrapper.innerHTML += (`
-          <div class="card">
-            <img class="card-img" src="${data.image}">
-            <p class="card-info">${data.info}</p>
-          </div>
+          <a href="/v1/api/types?query=${data.info}">
+            <div class="card">
+              <img class="card-img" src="${data.image}">
+              <p class="card-info">${data.info}</p>
+            </div>
+          </a>
         `)
       }
 
