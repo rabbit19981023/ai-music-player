@@ -18,8 +18,15 @@ form > div {
   margin: 15px 0;
 }
 
-textarea,
-input[type="text"] {
+
+input[id="song-name"],
+input[id="singer"] {
+  max-width: 80%;
+}
+
+input[type="file"],
+input[id="youtube-url"],
+textarea {
   max-width: 95%;
 }
 
