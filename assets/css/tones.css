@@ -1,7 +1,8 @@
 .tones-wrapper {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 5px;
+  margin: -5px;
+  padding: 0 10px;
 }
 
 @media screen and (max-width: 576px) {
@@ -13,4 +14,11 @@
     flex-wrap: nowrap;
     overflow-x: auto;
   }
+}
+
+.tone-img {
+  width: 50%;
+  height: 50%;
+  margin-top: 12px;
+  margin-bottom: 5px;
 }

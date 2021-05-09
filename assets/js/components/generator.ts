@@ -15,7 +15,7 @@ export default class {
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
       <form action="/auto-generate" method="POST" class="auto-form">
-        <label for="auto-numbers">歌曲數量：</label>
+        <label for="auto-numbers" class="auto-label">歌曲數量：</label>
         <input type="number" name="auto_numbers" id="auto-numbers" class="form-control auto-numbers" value="4" min="2" max="20">
 
         <button type="submit" class="btn btn-auto">自動產生</button>

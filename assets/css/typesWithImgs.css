@@ -12,8 +12,7 @@ h2 {
   flex-wrap: wrap;
   margin: -5px;
   padding: 0 10px;
-  margin-top: 0px;
-  margin-bottom: 15px;
+  margin-bottom: 35px;
 }
 
 @media screen and (max-width: 576px) {
@@ -30,32 +29,4 @@ h2 {
     min-width: 130px;
     min-height: 130px;
   }
-}
-
-.card {
-  align-items: center;
-  width: 130px;
-  height: 130px;
-  margin: 5px;
-  background-color: #e4d28ba2; /** 最後兩碼代表顏色透明度 **/
-  padding: 3px;
-  border: 1px solid rgba(255, 255, 255, 38%);
-}
-
-.card-img {
-  width: 120px;
-  height: 80px;
-}
-
-.card-info {
-  font-weight: 550;
-  margin-top: 10px;
-  color: #2c4f54;
-}
-
-.tone-img {
-  width: 50%;
-  height: 50%;
-  margin-top: 12px;
-  margin-bottom: 5px;
 }

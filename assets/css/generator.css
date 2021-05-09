@@ -4,48 +4,28 @@
   align-items: center;
   white-space: nowrap;
   margin: -5px;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 }
 
 .generator > * {
   margin: 5px;
 }
 
-label,
-span {
-  color: #7a4171;
+@media screen and (max-width: 576px) {
+  .generator > * {
+    margin: 2.5px;
+  }
 }
 
-label {
+.auto-label {
+  color: #7a4171;
   text-shadow: 4px 4px 3px#deb068;
-  font-weight: 550;
+  font-weight: 600;
 }
 
 .auto-numbers {
   text-align: center;
   padding: 3px 0px;
-}
-
-.btn-auto {
-  color: #80aba9;
-  padding: 3px 8px;
-  border: 1px solid #80aba9;
-}
-
-.btn-auto:hover {
-  color: #ffffff;
-  background-color: #80aba990;
-}
-
-.btn-advance {
-  color: #c89932;
-  padding: 3px 10px;
-  border: 1px solid #c89932;
-}
-
-.btn-advance:hover {
-  color: #ffffff;
-  background-color: #c8993290;
 }
 
 .auto-form {
@@ -57,13 +37,43 @@ label {
   margin-left: 10px;
 }
 
+@media screen and (max-width: 576px) {
+  .auto-form button {
+    margin-left: 5px;
+  }
+}
+
+.btn-auto {
+  color: #80aba9;
+  font-weight: 550;
+  padding: 3px 8px;
+  border: 1px solid #80aba9;
+}
+
+.btn-auto:hover {
+  color: #ffffff;
+  background-color: #80aba990;
+}
+
+.btn-advance {
+  color: #c89932;
+  font-weight: 550;
+  padding: 3px 10px;
+  border: 1px solid #c89932;
+}
+
+.btn-advance:hover {
+  color: #ffffff;
+  background-color: #c8993290;
+}
+
 .advance-form {
   opacity: 0;
   pointer-events: none;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.5);
+  transform: translate(-50%, -50%) scale(0.3);
   padding: 30px;
   background-color: #d8caaf;
   border: 1.5px solid rgba(255, 255, 255, 38%);
@@ -71,7 +81,7 @@ label {
   box-shadow: 3px 3px 15px rgba(255, 255, 255, 38%);
   overflow-y: hidden;
   white-space: nowrap;
-  transition: 0.25s;
+  transition: 0.4s;
   z-index: 1000;
 }
 
