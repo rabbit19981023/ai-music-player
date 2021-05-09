@@ -21,7 +21,7 @@ form > div {
 
 input[id="song-name"],
 input[id="singer"] {
-  max-width: 80%;
+  max-width: 70%;
 }
 
 input[type="file"],
