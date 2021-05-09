@@ -1,7 +1,13 @@
-h2,
+h2 {
+  color: #2c4f54;
+  text-shadow: 4px 4px 3px #c89932;
+  font-weight: 700;
+}
+
 label {
-  color: #FFFFFF;
-  opacity: 87%;
+  color: #2c4f54;
+  text-shadow: 4px 4px 3px #d8caaf;
+  font-weight: 600;
 }
 
 h2 {
@@ -20,6 +26,15 @@ input[type="text"] {
   max-width: 95%;
 }
 
-button {
+.btn-submit {
+  color: #7b8b6f;
+  font-weight: 550;
+  border: 1px solid #7b8b6f;
   margin-top: 15px;
 }
+
+.btn-submit:hover {
+  color: #fff;
+  background-color: #7b8b6f;
+}
+
