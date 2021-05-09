@@ -2,16 +2,13 @@ h2 {
   color: #2c4f54;
   text-shadow: 4px 4px 3px #c89932;
   font-weight: 700;
+  margin-bottom: 15px;
 }
 
 label {
-  color: #2c4f54;
-  text-shadow: 4px 4px 3px #d8caaf;
+  color: #f0ebe5;
+  text-shadow: 4px 4px 3px #656565;
   font-weight: 600;
-}
-
-h2 {
-  margin-bottom: 15px;
 }
 
 form > div {
@@ -27,14 +24,13 @@ input[type="text"] {
 }
 
 .btn-submit {
-  color: #7b8b6f;
+  color: #ffffff;
   font-weight: 550;
-  border: 1px solid #7b8b6f;
+  background-color: #7b8b6f;
   margin-top: 15px;
 }
 
 .btn-submit:hover {
-  color: #fff;
-  background-color: #7b8b6f;
+  color: #ffffff;
+  border: 1px solid #ffffff;
 }
-
