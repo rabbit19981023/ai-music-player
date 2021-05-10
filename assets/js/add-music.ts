@@ -28,14 +28,14 @@ const buildUpload = function (): void {
 
       switch (apiData.status) {
         case 'Done':
-          // update song data into MongoDB
-          const updateSong = async function (song: ApiData): Promise<void> {
+          // add song data into MongoDB
+          const addSong = async function (song: ApiData): Promise<void> {
             const config = {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               },
-              mode: 'same-origin',
+              mode: 'same-origin' as RequestMode,
               body: `song_data=${song}`
             }
 
@@ -54,7 +54,7 @@ const buildUpload = function (): void {
             }
           }
 
-          updateSong(apiData)
+          addSong(apiData)
           break
 
         case 'Error':

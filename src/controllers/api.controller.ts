@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import fetch from 'node-fetch'
 
+import SongModel from '../models/songs'
+
 export default {
   // GET '/v1/api/types/all'
   allTypes: async function (req: Request, res: Response): Promise<void> {
@@ -68,5 +70,10 @@ export default {
     }
 
     res.json(tones)
+  },
+
+  // POST '/v1/api/songs'
+  addSong: function (req: Request, res: Response): void {
+
   }
 }
