@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 
 export default {
-  connect: async function () {
+  connect: async function (): Promise<void> {
     try {
       await mongoose.connect(process.env.MONGODB_URI || 'Not Find URI in ENV !!', {
         useNewUrlParser: true,

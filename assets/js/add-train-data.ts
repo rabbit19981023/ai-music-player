@@ -1,12 +1,12 @@
 import createTypeSelect from './helpers/typeSelect.js'
 
-const buildTypeSelect = function () {
+const buildTypeSelect = function (): void {
   const typeSelect: HTMLElement = document.querySelector('#type') as HTMLElement
   createTypeSelect(typeSelect)
 }
 
-const buildUpload = function () {
-  const upload = async function () {
+const buildUpload = function (): void {
+  const upload = async function (): Promise<void> {
     const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
     const formData: FormData = new FormData(form)
 
@@ -34,8 +34,11 @@ const buildUpload = function () {
       }
 
       // Redirect
-      return window.location.href = '/add-train-data'
-    } catch (err) { }
+      window.location.href = '/add-train-data'
+    } catch (err) {
+      window.alert('無法連線伺服器，請重上傳一次！')
+      window.location.href = '/add-train-data'
+    }
   }
 
   const uploadBtn: HTMLElement = document.querySelector('#upload') as HTMLElement

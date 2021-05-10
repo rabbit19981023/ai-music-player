@@ -3,7 +3,7 @@ import fetch from 'node-fetch'
 
 export default {
   // GET '/v1/api/types/all'
-  allTypes: async function (req: Request, res: Response) {
+  allTypes: async function (req: Request, res: Response): Promise<void> {
     try {
       type ApiData = {
         [i: string]: string
@@ -12,12 +12,12 @@ export default {
       const result = await fetch('http://163.18.42.232:8000/get_types')
       const types: ApiData = await result.json()
 
-      return res.json(types)
-    } catch (err) { return res.json({ status: 500 }) }
+      res.json(types)
+    } catch (err) { res.json({ status: 500 }) }
   },
 
   // GET '/v1/api/types-with-imgs/all'
-  typesWithImgs: async function (req: Request, res: Response) {
+  typesWithImgs: async function (req: Request, res: Response): Promise<void> {
     try {
       type ApiData = {
         [i: string]: {
@@ -29,12 +29,12 @@ export default {
       const result = await fetch('http://163.18.42.232:8000/types_img')
       const typesWithImgs: ApiData = await result.json()
 
-      return res.json(typesWithImgs)
-    } catch (err) { return res.json({ status: 500 }) }
+      res.json(typesWithImgs)
+    } catch (err) { res.json({ status: 500 }) }
   },
 
   // GET '/v1/api/tones/all'
-  allTones: function (req: Request, res: Response) {
+  allTones: function (req: Request, res: Response): void {
     const infos: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     const images: string[] = [
       '/img/C.png',
@@ -67,6 +67,6 @@ export default {
       }
     }
 
-    return res.json(tones)
+    res.json(tones)
   }
 }

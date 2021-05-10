@@ -8,7 +8,7 @@ export default class {
     this.build()
   }
 
-  private async build () {
+  private async build (): Promise<void> {
     const tonesWrapper: HTMLElement = document.createElement('div')
 
     try {

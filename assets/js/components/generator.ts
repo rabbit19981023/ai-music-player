@@ -10,7 +10,7 @@ export default class {
     this.build()
   }
 
-  private async build () {
+  private async build (): Promise<void> {
     const autoNumbers: HTMLElement = document.createElement('div')
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
@@ -74,13 +74,13 @@ export default class {
 
     const advanceBtn: HTMLElement = this.element.querySelector('.btn-advance') as HTMLElement
     const advanceForm: HTMLElement = this.element.querySelector('.advance-form') as HTMLElement
-    const displayForm = function () {
+    const displayForm = function (): void {
       advanceForm.classList.add('toggle')
     }
     advanceBtn.addEventListener('click', displayForm)
 
     const closeBtn: HTMLElement = this.element.querySelector('.close-btn') as HTMLElement
-    const closeForm = function () {
+    const closeForm = function (): void {
       advanceForm.classList.remove('toggle')
     }
     closeBtn.addEventListener('click', closeForm)

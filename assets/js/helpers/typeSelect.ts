@@ -1,4 +1,4 @@
-export default async function (selectNode: HTMLElement) {
+export default async function (selectNode: HTMLElement): Promise<void> {
   try {
     type ApiData = {
       [i: string]: string
