@@ -74,6 +74,8 @@ export default {
 
   // POST '/v1/api/songs'
   addSong: function (req: Request, res: Response): void {
+    const song = JSON.parse(JSON.stringify(req.body.song_data))
 
+    console.log(song)
   }
 }
