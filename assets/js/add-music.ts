@@ -49,9 +49,7 @@ const buildUpload = function (): void {
                 case 'Error':
                   window.alert('伺服器處理錯誤2，請重上傳一次！')
               }
-            } catch (err) {
-              window.alert('無法連線伺服器2，請重上傳一次！')
-            }
+            } catch (err) { window.alert('無法連線伺服器2，請重上傳一次！') }
           }
 
           addSong(apiData)

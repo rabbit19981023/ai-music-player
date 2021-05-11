@@ -32,9 +32,7 @@ const findOne = async function (filter: JSON): Promise<Song | null> {
     try {
       const song: Song | null = await SongModel.findOne(filter)
       resolve(song)
-    } catch (err) {
-      reject(err)
-    }
+    } catch (err) { reject(err) }
   })
 }
 
@@ -56,9 +54,7 @@ const add = function (song: SongData): Promise<Song | null> {
       } else {
         resolve(null)
       }
-    } catch (err) {
-      reject(err)
-    }
+    } catch (err) { reject(err) }
   })
 }
 

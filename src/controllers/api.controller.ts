@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import fetch from 'node-fetch'
 
+import { Document } from 'mongoose'
 import SongModel from '../models/songs'
 
 export default {
@@ -15,7 +16,7 @@ export default {
       const types: ApiData = await result.json()
 
       res.json(types)
-    } catch (err) { res.json({ status: 500 }) }
+    } catch (err) { res.json({ status: 'Error' }) }
   },
 
   // GET '/v1/api/types-with-imgs/all'
@@ -32,7 +33,7 @@ export default {
       const typesWithImgs: ApiData = await result.json()
 
       res.json(typesWithImgs)
-    } catch (err) { res.json({ status: 500 }) }
+    } catch (err) { res.json({ status: 'Error' }) }
   },
 
   // GET '/v1/api/tones/all'
@@ -74,7 +75,7 @@ export default {
 
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
-    type Song = {
+    type SongData = {
       song_name: string,
       type: string,
       genre: string,
@@ -87,10 +88,15 @@ export default {
       status: string
     }
 
-    const song: Song = JSON.parse(req.body.song_data)
+    interface Song extends Document {
+      data: SongData,
+      status: string
+    }
+
+    const song: SongData = JSON.parse(req.body.song_data)
 
     try {
-      const result = await SongModel.add(song)
+      const result: Song | null = await SongModel.add(song)
       if (result) {
         res.json({ status: 'Done' })
       } else {
