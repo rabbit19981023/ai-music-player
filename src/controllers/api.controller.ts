@@ -73,9 +73,29 @@ export default {
   },
 
   // POST '/v1/api/songs'
-  addSong: function (req: Request, res: Response): void {
-    const song = JSON.parse(JSON.stringify(req.body.song_data))
+  addSong: async function (req: Request, res: Response): Promise<void> {
+    type Song = {
+      song_name: string,
+      type: string,
+      genre: string,
+      singer: string,
+      bpm: number,
+      tone: string,
+      media_url: string,
+      path: string,
+      nlp_psg: object,
+      status: string
+    }
 
-    console.log(song)
+    const song: Song = JSON.parse(req.body.song_data)
+
+    try {
+      const result = await SongModel.add(song)
+      if (result) {
+        res.json({ status: 'Done' })
+      } else {
+        res.json({ status: 'Error' })
+      }
+    } catch (err) { res.json({ status: 'Error' }) }
   }
 }

@@ -4,7 +4,7 @@ const buildUpload = function (): void {
     const formData: FormData = new FormData(form)
 
     try {
-      type ApiData = {
+      type Song = {
         song_name: string,
         type: string,
         genre: string,
@@ -24,19 +24,19 @@ const buildUpload = function (): void {
 
       // Upload music to API server
       const response = await fetch('http://163.18.42.232:8000/add_music', config)
-      const apiData: ApiData = await response.json()
+      const apiData: Song = await response.json()
 
       switch (apiData.status) {
         case 'Done':
           // add song data into MongoDB
-          const addSong = async function (song: ApiData): Promise<void> {
+          const addSong = async function (song: Song): Promise<void> {
             const config = {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               },
               mode: 'same-origin' as RequestMode,
-              body: `song_data=${song}`
+              body: `song_data=${ JSON.stringify(song) }`
             }
 
             try {
@@ -47,10 +47,10 @@ const buildUpload = function (): void {
                 case 'Done':
                   window.alert('上傳成功！')
                 case 'Error':
-                  window.alert('伺服器處理錯誤，請重上傳一次！')
+                  window.alert('伺服器處理錯誤2，請重上傳一次！')
               }
             } catch (err) {
-              window.alert('無法連線伺服器，請重上傳一次！')
+              window.alert('無法連線伺服器2，請重上傳一次！')
             }
           }
 
@@ -58,15 +58,15 @@ const buildUpload = function (): void {
           break
 
         case 'Error':
-          window.alert('上傳失敗：請確認表單是否填寫錯誤！')
+          window.alert('上傳失敗1：請確認表單是否填寫錯誤！')
           break
       }
 
       // Redirect
-      window.location.href = '/add-music'
+      // window.location.href = '/add-music'
     } catch (err) {
-      window.alert('無法連線伺服器，請重上傳一次！')
-      window.location.href = '/add-music'
+      window.alert('無法連線伺服器1，請重上傳一次！')
+      // window.location.href = '/add-music'
     }
   }
 

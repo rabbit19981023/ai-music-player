@@ -1,15 +1,6 @@
 import mongoose, { Schema, Model, Document } from 'mongoose'
 
-// design our schema for songs data
-const SongSchema: Schema = new Schema({
-  data: JSON,
-  status: String
-})
-
-// compiling our schema to a Data Model
-const SongModel: Model<Song> = mongoose.model('songs', SongSchema)
-
-type songData = {
+type SongData = {
   song_name: string,
   type: string,
   genre: string,
@@ -23,14 +14,23 @@ type songData = {
 }
 
 interface Song extends Document {
-  data: songData,
+  data: SongData,
   status: string
 }
 
-const findOne = async function (filter: JSON): Promise<Song> {
+// design our schema for songs data
+const SongSchema: Schema = new Schema({
+  data: JSON,
+  status: String
+})
+
+// compiling our schema to a Data Model
+const SongModel: Model<Song> = mongoose.model('songs', SongSchema)
+
+const findOne = async function (filter: JSON): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
-      const song = await SongModel.findOne(filter)
+      const song: Song | null = await SongModel.findOne(filter)
       resolve(song)
     } catch (err) {
       reject(err)
@@ -38,10 +38,10 @@ const findOne = async function (filter: JSON): Promise<Song> {
   })
 }
 
-const add = function (song: songData): Promise<Song> {
+const add = function (song: SongData): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
-      const existSong = await SongModel.findOne({
+      const existSong: Song | null = await SongModel.findOne({
         song_name: song.song_name
       })
 
@@ -51,8 +51,10 @@ const add = function (song: songData): Promise<Song> {
           status: 'Done'
         })
   
-        const songDoc = await newSong.save()
+        const songDoc: Song = await newSong.save()
         resolve(songDoc)
+      } else {
+        resolve(null)
       }
     } catch (err) {
       reject(err)
