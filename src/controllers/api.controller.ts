@@ -16,7 +16,7 @@ export default {
       const types: ApiData = await result.json()
 
       res.json(types)
-    } catch (err) { res.json({ status: 'Error' }) }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   },
 
   // GET '/v1/api/types-with-imgs/all'
@@ -33,7 +33,7 @@ export default {
       const typesWithImgs: ApiData = await result.json()
 
       res.json(typesWithImgs)
-    } catch (err) { res.json({ status: 'Error' }) }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   },
 
   // GET '/v1/api/tones/all'
@@ -97,11 +97,12 @@ export default {
 
     try {
       const result: Song | null = await SongModel.add(song)
+
       if (result) {
         res.json({ status: 'Done' })
       } else {
         res.json({ status: 'Error' })
       }
-    } catch (err) { res.json({ status: 'Error' }) }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   }
 }

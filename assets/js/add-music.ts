@@ -1,3 +1,5 @@
+import Loader from './components/loader.js'
+
 const buildUpload = function (): void {
   const upload = async function (): Promise<void> {
     const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
@@ -22,6 +24,10 @@ const buildUpload = function (): void {
         body: formData
       }
 
+      // Active Loader Animation before Upload music
+      const loader: HTMLElement = document.querySelector('.loader-wrapper') as HTMLElement
+      loader.classList.add('active')
+
       // Upload music to API server
       const response = await fetch('http://163.18.42.232:8000/add_music', config)
       const apiData: Song = await response.json()
@@ -35,7 +41,6 @@ const buildUpload = function (): void {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               },
-              mode: 'same-origin' as RequestMode,
               body: `song_data=${ JSON.stringify(song) }`
             }
 
@@ -46,7 +51,11 @@ const buildUpload = function (): void {
               switch (result.status) {
                 case 'Done':
                   window.alert('上傳成功！')
+                  break
                 case 'Error':
+                  window.alert('這首歌已經被上傳過囉！')
+                  break
+                case 'Server Error':
                   window.alert('伺服器處理錯誤2，請重上傳一次！')
               }
             } catch (err) { window.alert('無法連線伺服器2，請重上傳一次！') }
@@ -54,17 +63,16 @@ const buildUpload = function (): void {
 
           addSong(apiData)
           break
-
         case 'Error':
-          window.alert('上傳失敗1：請確認表單是否填寫錯誤！')
+          window.alert('上傳失敗：請確認表單是否填寫錯誤！')
           break
       }
 
       // Redirect
-      // window.location.href = '/add-music'
+      window.location.href = '/add-music'
     } catch (err) {
       window.alert('無法連線伺服器1，請重上傳一次！')
-      // window.location.href = '/add-music'
+      window.location.href = '/add-music'
     }
   }
 
@@ -72,4 +80,12 @@ const buildUpload = function (): void {
   uploadBtn.addEventListener('click', upload)
 }
 
+const buildLoader = function (): void {
+  const loader: HTMLElement = new Loader('loader-wrapper').element
+
+  const container: HTMLElement = document.querySelector('.container') as HTMLElement
+  container.appendChild(loader)
+}
+
 buildUpload()
+buildLoader()

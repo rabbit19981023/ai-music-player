@@ -40,7 +40,7 @@ const add = function (song: SongData): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
       const existSong: Song | null = await SongModel.findOne({
-        song_name: song.song_name
+        "data.song_name": song.song_name
       })
 
       if (existSong === null) {

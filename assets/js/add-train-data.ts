@@ -1,4 +1,5 @@
 import createTypeSelect from './helpers/typeSelect.js'
+import Loader from './components/loader.js'
 
 const buildTypeSelect = function (): void {
   const typeSelect: HTMLElement = document.querySelector('#type') as HTMLElement
@@ -20,6 +21,11 @@ const buildUpload = function (): void {
         body: formData
       }
 
+      // Active Loader Animation before Upload music
+      const loader: HTMLElement = document.querySelector('.loader-wrapper') as HTMLElement
+      loader.classList.add('active')
+
+      // Upload music to API server
       const response = await fetch('http://163.18.42.232:8000/add_train_data', config)
       const result: ApiData = await response.json()
 
@@ -45,5 +51,13 @@ const buildUpload = function (): void {
   uploadBtn.addEventListener('click', upload)
 }
 
+const buildLoader = function (): void {
+  const loader: HTMLElement = new Loader('loader-wrapper').element
+
+  const container: HTMLElement = document.querySelector('.container') as HTMLElement
+  container.appendChild(loader)
+}
+
 buildTypeSelect()
 buildUpload()
+buildLoader()
