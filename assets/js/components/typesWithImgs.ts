@@ -26,7 +26,7 @@ export default class {
         const data = typesWithImgs[i]
 
         typesWrapper.innerHTML += (`
-          <a href="/v1/api/types?query=${data.info}">
+          <a href="/v1/api/songs?type=${data.info}">
             <div class="card">
               <img class="card-img" src="${data.image}">
               <p class="card-info">${data.info}</p>

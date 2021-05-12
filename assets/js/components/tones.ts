@@ -22,11 +22,11 @@ export default class {
       const response = await fetch('/v1/api/tones/all')
       const tones: ApiData = await response.json()
 
-      for (let i in tones) {
-        const data = tones[i]
+      for (let index in tones) {
+        const data = tones[index]
 
         tonesWrapper.innerHTML += (`
-          <a href="/v1/api/tones?query=${data.info}">
+          <a href="/v1/api/songs?tone=${index}">
             <div class="card">
               <img class="card-img tone-img" src="${data.image}">
               <p class="card-info">${data.info}</p>

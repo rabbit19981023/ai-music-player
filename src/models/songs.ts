@@ -27,7 +27,16 @@ const SongSchema: Schema = new Schema({
 // compiling our schema to a Data Model
 const SongModel: Model<Song> = mongoose.model('songs', SongSchema)
 
-const findOne = async function (filter: JSON): Promise<Song | null> {
+const find = async function (filter: object): Promise<Song[]> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const songs: Song[] = await SongModel.find(filter)
+      resolve(songs)
+    } catch (err) { reject(err) }
+  })
+}
+
+const findOne = async function (filter: object): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
       const song: Song | null = await SongModel.findOne(filter)
@@ -59,6 +68,7 @@ const add = function (song: SongData): Promise<Song | null> {
 }
 
 export default {
+  find: find,
   findOne: findOne,
   add: add
 }

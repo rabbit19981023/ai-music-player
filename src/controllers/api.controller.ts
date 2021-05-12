@@ -39,6 +39,7 @@ export default {
   // GET '/v1/api/tones/all'
   allTones: function (req: Request, res: Response): void {
     const infos: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
     const images: string[] = [
       '/img/C.png',
       '/img/C.png',
@@ -71,6 +72,61 @@ export default {
     }
 
     res.json(tones)
+  },
+
+  // GET '/v1/api/songs?type=${type}'
+  getSongs: async function (req: Request, res: Response): Promise<void> {
+    type SongData = {
+      song_name: string,
+      type: string,
+      genre: string,
+      singer: string,
+      bpm: number,
+      tone: string,
+      media_url: string,
+      path: string,
+      nlp_psg: object,
+      status: string
+    }
+
+    interface Song extends Document {
+      data: SongData,
+      status: string
+    }
+
+    const type: string = req.query.type as string
+    const tone: string = req.query.tone as string
+
+    let filter: object
+    let songs: Song[]
+
+    try {
+      if (type) {
+        filter = { "data.type": type }
+        songs = await SongModel.find(filter)
+
+        res.json(songs)
+        return
+      }
+  
+      if (tone) {
+        const tones: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+        const index: number = parseInt(tone)
+  
+        const pattern: string = `${tones[index]},`
+        const re: RegExp = new RegExp(pattern, 'g')
+  
+        filter = {
+          "data.tone": {
+            $regex: re
+          }
+        }
+        songs = await SongModel.find(filter)
+
+        res.json(songs)
+        return
+      }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   },
 
   // POST '/v1/api/songs'
