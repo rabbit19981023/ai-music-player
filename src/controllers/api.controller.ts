@@ -103,11 +103,6 @@ export default {
       } else {
         res.json({ status: 'Error' })
       }
-    } catch (err) {
-      console.log(err)
-
-      
-      res.json({ status: 'Server Error' })
-    }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   }
 }
