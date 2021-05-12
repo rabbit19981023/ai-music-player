@@ -72,7 +72,7 @@ export default {
 
     res.json(tones)
   },
-  
+
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
     type SongData = {
@@ -103,6 +103,11 @@ export default {
       } else {
         res.json({ status: 'Error' })
       }
-    } catch (err) { res.json({ status: 'Server Error' }) }
+    } catch (err) {
+      console.log(err)
+
+      
+      res.json({ status: 'Server Error' })
+    }
   }
 }

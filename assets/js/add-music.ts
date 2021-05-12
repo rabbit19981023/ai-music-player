@@ -61,9 +61,7 @@ const buildUpload = function (): void {
                   window.alert('伺服器處理錯誤2，請重上傳一次！')
                   break
               }
-            } catch (err) {
-              window.alert('無法連線伺服器2，請重上傳一次！')
-            }
+            } catch (err) { window.alert('無法連線伺服器2，請重上傳一次！') }
           }
 
           await addSong(apiData)
