@@ -1,6 +1,7 @@
 import Loader from './components/loader.js'
 
 const buildUpload = function (): void {
+  // event handler when upload-btn clicked
   const upload = async function (): Promise<void> {
     const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
     const formData: FormData = new FormData(form)
@@ -41,6 +42,7 @@ const buildUpload = function (): void {
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               },
+              mode: 'same-origin' as RequestMode,
               body: `song_data=${ JSON.stringify(song) }`
             }
 
@@ -57,21 +59,28 @@ const buildUpload = function (): void {
                   break
                 case 'Server Error':
                   window.alert('伺服器處理錯誤2，請重上傳一次！')
+                  break
               }
-            } catch (err) { window.alert('無法連線伺服器2，請重上傳一次！') }
+            } catch (err) {
+              window.alert('無法連線伺服器2，請重上傳一次！')
+            }
           }
 
-          addSong(apiData)
+          await addSong(apiData)
+          // Redirect after addSong return Promise Result
+          window.location.href = '/add-music'
           break
         case 'Error':
           window.alert('上傳失敗：請確認表單是否填寫錯誤！')
+
+          // Redirect
+          window.location.href = '/add-music'
           break
       }
-
-      // Redirect
-      window.location.href = '/add-music'
     } catch (err) {
       window.alert('無法連線伺服器1，請重上傳一次！')
+
+      // Redirect
       window.location.href = '/add-music'
     }
   }
