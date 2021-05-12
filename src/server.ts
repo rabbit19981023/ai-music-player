@@ -9,6 +9,7 @@ import db from './config/db'
 
 /** Routes **/
 import apiRoute from './routes/api.route'
+import musicPlayerRoute from './routes/musicPlayer.route'
 import uploadRoute from './routes/upload.route'
 
 /** Main Express App **/
@@ -42,6 +43,7 @@ class Server {
     const app: express.Application = this.app
 
     app.use('/v1/api', apiRoute)
+    app.use('/', musicPlayerRoute)
     app.use('/', uploadRoute)
   }
 
