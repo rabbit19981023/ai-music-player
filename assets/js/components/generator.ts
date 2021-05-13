@@ -14,7 +14,7 @@ export default class {
     const autoNumbers: HTMLElement = document.createElement('div')
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
-      <form action="/auto-generate" method="POST" class="auto-form">
+      <form action="/v1/api/songs" method="GET" class="auto-form">
         <label for="auto-numbers" class="auto-label">歌曲數量：</label>
         <input type="number" name="song_numbers" id="auto-numbers" class="form-control auto-numbers" value="4" min="2" max="20">
 
