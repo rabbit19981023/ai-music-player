@@ -87,7 +87,8 @@ export default {
       const type: string = req.query.type as string
       const tone: string = req.query.tone as string
       const keywords: string[] = req.query.keywords as string[]
-      const bpm: number = parseInt(req.query.bpm as string)
+      const minSpeed: number = parseInt(req.query.min_speed as string)
+      const maxSpeed: number = parseInt(req.query.max_speed as string)
 
       const filter: Filter = { } as Filter
 
@@ -107,6 +108,17 @@ export default {
         }
       }
 
+      if (keywords) {
+
+      }
+
+      if (minSpeed && maxSpeed) {
+        filter["data.bpm"] = {
+          $gte: minSpeed,
+          $lte: maxSpeed
+        }
+      }
+
       const songs: Song[] = await SongModel.find(filter)
 
       res.json(songs)
@@ -116,6 +128,7 @@ export default {
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
     const song: SongData = JSON.parse(req.body.song_data)
+    song.bpm = parseInt(song.bpm as string) // parsing string to number, help data filter
 
     try {
       const result: Song | null = await SongModel.add(song)

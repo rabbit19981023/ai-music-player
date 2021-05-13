@@ -5,7 +5,7 @@ export type SongData = {
   type: string,
   genre: string,
   singer: string,
-  bpm: number,
+  bpm: string | number, // FormData: string, DataField: number
   tone: string,
   media_url: string,
   path: string,
@@ -45,7 +45,7 @@ const findOne = async function (filter: object): Promise<Song | null> {
   })
 }
 
-const add = function (song: SongData): Promise<Song | null> {
+const add = async function (song: SongData): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
       const existSong: Song | null = await SongModel.findOne({
