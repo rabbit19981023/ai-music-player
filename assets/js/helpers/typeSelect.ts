@@ -12,7 +12,7 @@ export default async function (selectNode: HTMLElement): Promise<void> {
       const type: string = types[i]
 
       typeSelect.innerHTML += (`
-        <option value="${i}">${type}</option>
+        <option value="${type}">${type}</option>
       `)
     }
   } catch (err) { }

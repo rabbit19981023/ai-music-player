@@ -16,7 +16,7 @@ export default class {
     autoNumbers.innerHTML = (`
       <form action="/auto-generate" method="POST" class="auto-form">
         <label for="auto-numbers" class="auto-label">歌曲數量：</label>
-        <input type="number" name="auto_numbers" id="auto-numbers" class="form-control auto-numbers" value="4" min="2" max="20">
+        <input type="number" name="song_numbers" id="auto-numbers" class="form-control auto-numbers" value="4" min="2" max="20">
 
         <button type="submit" class="btn btn-auto">自動產生</button>
       </form>
@@ -31,7 +31,7 @@ export default class {
 
     const formWrapper: HTMLElement = document.createElement('div')
     formWrapper.innerHTML = (`
-      <form action="/advance-generate" method="POST" class="advance-form">
+      <form action="/v1/api/songs" method="GET" class="advance-form">
         <span class="close-btn"></span>
 
         <div>

@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
 import fetch from 'node-fetch'
 
-import { Document } from 'mongoose'
-import SongModel from '../models/songs'
+import SongModel, { SongData, Song } from '../models/songs'
 
 export default {
   // GET '/v1/api/types/all'
@@ -74,81 +73,48 @@ export default {
     res.json(tones)
   },
 
-  // GET '/v1/api/songs?type=${type}'
+  // GET '/v1/api/songs'
   getSongs: async function (req: Request, res: Response): Promise<void> {
-    type SongData = {
-      song_name: string,
-      type: string,
-      genre: string,
-      singer: string,
-      bpm: number,
-      tone: string,
-      media_url: string,
-      path: string,
-      nlp_psg: object,
-      status: string
+    type Filter = {
+      "data.type": string,
+      "data.tone": object,
+      "data.keywords": object,
+      "data.bpm": object,
     }
-
-    interface Song extends Document {
-      data: SongData,
-      status: string
-    }
-
-    const type: string = req.query.type as string
-    const tone: string = req.query.tone as string
-
-    let filter: object
-    let songs: Song[]
 
     try {
-      if (type) {
-        filter = { "data.type": type }
-        songs = await SongModel.find(filter)
+      const songNumbers: number = parseInt(req.query.song_numbers as string)
+      const type: string = req.query.type as string
+      const tone: string = req.query.tone as string
+      const keywords: string[] = req.query.keywords as string[]
+      const bpm: number = parseInt(req.query.bpm as string)
 
-        res.json(songs)
-        return
+      const filter: Filter = { } as Filter
+
+      if (type) {
+        filter["data.type"] = type
       }
-  
+
       if (tone) {
         const tones: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         const index: number = parseInt(tone)
-  
-        const pattern: string = `${tones[index]},`
-        const re: RegExp = new RegExp(pattern, 'g')
-  
-        filter = {
-          "data.tone": {
-            $regex: re
-          }
-        }
-        songs = await SongModel.find(filter)
 
-        res.json(songs)
-        return
+        const pattern: string = `${tones[index]},` // be aware of ',' !!
+        const regex: RegExp = new RegExp(pattern, 'g')
+
+        filter["data.tone"] = {
+          $regex: regex
+        }
       }
-    } catch (err) { res.json({ status: 'Server Error' }) }
+
+      const songs: Song[] = await SongModel.find(filter)
+
+      res.json(songs)
+    } catch (err) { res.json({ status: 'Server Error' })}
   },
 
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
-    type SongData = {
-      song_name: string,
-      type: string,
-      genre: string,
-      singer: string,
-      bpm: number,
-      tone: string,
-      media_url: string,
-      path: string,
-      nlp_psg: object,
-      status: string
-    }
-
-    interface Song extends Document {
-      data: SongData,
-      status: string
-    }
-
     const song: SongData = JSON.parse(req.body.song_data)
 
     try {

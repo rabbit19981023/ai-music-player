@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model, Document } from 'mongoose'
 
-type SongData = {
+export type SongData = {
   song_name: string,
   type: string,
   genre: string,
@@ -13,7 +13,7 @@ type SongData = {
   status: string
 }
 
-interface Song extends Document {
+export interface Song extends Document {
   data: SongData,
   status: string
 }
