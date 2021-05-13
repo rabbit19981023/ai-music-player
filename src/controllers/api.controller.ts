@@ -86,7 +86,7 @@ export default {
       const songNumbers: number = parseInt(req.query.song_numbers as string)
       const type: string = req.query.type as string
       const tone: string = req.query.tone as string
-      const keywords: string[] = req.query.keywords as string[]
+      let keywords: string | string[] = req.query.keywords as string
       const minSpeed: number = parseInt(req.query.min_speed as string)
       const maxSpeed: number = parseInt(req.query.max_speed as string)
 
@@ -109,7 +109,11 @@ export default {
       }
 
       if (keywords) {
+        keywords = keywords.split(' ')
 
+        filter["data.keywords"] = {
+          $in: keywords
+        }
       }
 
       if (minSpeed && maxSpeed) {
@@ -121,14 +125,52 @@ export default {
 
       const songs: Song[] = await SongModel.find(filter)
 
-      res.json(songs)
-    } catch (err) { res.json({ status: 'Server Error' })}
+      // Generate "random" Hymns List depends on "song_numbers"
+      if (songNumbers) {
+        // randomSet.size == song_numbers
+        // randomSet.item <= Song[].length - 1 (0 ~ length-1)
+        const getRandomSet = function (songNumbers: number): Set<number> {
+          const getRandomNum = function (maxNumber: number): number {
+            return Math.floor(Math.random() * maxNumber)
+          }
+
+          const randomSet: Set<number> = new Set()
+          while (randomSet.size < songNumbers) {
+            randomSet.add(getRandomNum(songs.length))
+          }
+          return randomSet
+        }
+
+        if (songs.length < songNumbers) {
+          res.json(songs)
+        } else {
+          const randomSet: Set<number> = getRandomSet(songNumbers)
+          const newSongs: Song[] = []
+
+          for (let index of randomSet) {
+            newSongs.push(songs[index])
+          }
+          res.json(newSongs)
+        }
+      } else {
+        res.json(songs)
+      }
+    } catch (err) { res.json({ status: 'Server Error' }) }
   },
 
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
     const song: SongData = JSON.parse(req.body.song_data)
-    song.bpm = parseInt(song.bpm as string) // parsing string to number, help data filter
+    song.bpm = parseInt(song.bpm as string) // parsing string to number, to make number comparison possible
+
+    const keywords: string[] = []
+    for (let list in song.nlp_psg) {
+      for (let i in song.nlp_psg[list] as string[]) {
+        keywords.push(song.nlp_psg[list][i] as string)
+      }
+    }
+
+    song.keywords = keywords
 
     try {
       const result: Song | null = await SongModel.add(song)

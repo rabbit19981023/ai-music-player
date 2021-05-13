@@ -9,7 +9,8 @@ export type SongData = {
   tone: string,
   media_url: string,
   path: string,
-  nlp_psg: object,
+  nlp_psg: [ key: string[] ],
+  keywords: string[], // Generate from 'POST /v1/api/songs' API
   status: string
 }
 
