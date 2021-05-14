@@ -90,7 +90,7 @@ export default {
       const minSpeed: number = parseInt(req.query.min_speed as string)
       const maxSpeed: number = parseInt(req.query.max_speed as string)
 
-      const filter: Filter = { } as Filter
+      const filter: Filter = {} as Filter
 
       if (type) {
         filter["data.type"] = type
@@ -123,38 +123,38 @@ export default {
         }
       }
 
+      // Get origin Songs
       const songs: Song[] = await SongModel.find(filter)
 
-      // Generate "random" Hymns List depends on "song_numbers"
-      if (songNumbers) {
-        // randomSet.size == song_numbers
-        // randomSet.item <= Song[].length - 1 (0 ~ length-1)
-        const getRandomSet = function (songNumbers: number): Set<number> {
-          const getRandomNum = function (maxNumber: number): number {
-            return Math.floor(Math.random() * maxNumber)
-          }
+      /** 亂數排序演算法: Fisher-Yates Shuffle (結果呈現"均勻分配") **/
+      const shuffleSongs = function (songs: Song[]) {
+        // 從最後一首歌開始跑，一直到第"二"首歌為止
+        // 每次迴圈，都讓"目前"的歌跟"前方隨機"一首歌交換位置
+        for (let current: number = songs.length - 1; current > 0; current--) {
+          const previous: number = Math.floor(Math.random() * (current + 1));
 
-          const randomSet: Set<number> = new Set()
-          while (randomSet.size < songNumbers) {
-            randomSet.add(getRandomNum(songs.length))
-          }
-          return randomSet
+          // Swap current-song and previous-song
+          [songs[current], songs[previous]] = [songs[previous], songs[current]]
         }
+      }
+      shuffleSongs(songs)
 
+      if (songNumbers) {
         if (songs.length < songNumbers) {
           res.json(songs)
-        } else {
-          const randomSet: Set<number> = getRandomSet(songNumbers)
-          const newSongs: Song[] = []
-
-          for (let index of randomSet) {
-            newSongs.push(songs[index])
-          }
-          res.json(newSongs)
+          return
         }
-      } else {
-        res.json(songs)
+
+        const songsList = []
+        for (let i = 0; i < songNumbers; i++) {
+          songsList.push(songs[i])
+        }
+
+        res.json(songsList)
+        return
       }
+
+      res.json(songs)
     } catch (err) { res.json({ status: 'Server Error' }) }
   },
 
@@ -177,9 +177,10 @@ export default {
 
       if (result) {
         res.json({ status: 'Done' })
-      } else {
-        res.json({ status: 'Error' })
+        return
       }
+      
+      res.json({ status: 'Error' })
     } catch (err) { res.json({ status: 'Server Error' }) }
   }
 }

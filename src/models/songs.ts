@@ -61,9 +61,10 @@ const add = async function (song: SongData): Promise<Song | null> {
   
         const songDoc: Song = await newSong.save()
         resolve(songDoc)
-      } else {
-        resolve(null)
+        return
       }
+      
+      resolve(null)
     } catch (err) { reject(err) }
   })
 }
