@@ -90,7 +90,7 @@ export default {
       const minSpeed: number = parseInt(req.query.min_speed as string)
       const maxSpeed: number = parseInt(req.query.max_speed as string)
 
-      const filter: Filter = {} as Filter
+      const filter: Filter = { } as Filter
 
       if (type) {
         filter["data.type"] = type

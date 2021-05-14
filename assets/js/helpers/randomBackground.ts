@@ -25,7 +25,7 @@ const randomBackground = function (): void {
     return images[randomIndex]
   }
 
-  const bg: HTMLElement = document.querySelector('.bg-img') as HTMLElement
+  const bg: HTMLDivElement = document.querySelector('.bg-img') as HTMLDivElement
   const randomImg: string = getRandomImg()
   bg.style.backgroundImage = `url("${randomImg}")`
 }

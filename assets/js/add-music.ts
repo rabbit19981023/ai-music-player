@@ -26,7 +26,7 @@ const buildUpload = function (): void {
       }
 
       // Active Loader Animation before Upload music
-      const loader: HTMLElement = document.querySelector('.loader-wrapper') as HTMLElement
+      const loader: HTMLDivElement = document.querySelector('.loader-wrapper') as HTMLDivElement
       loader.classList.add('active')
 
       // Upload music to API server
@@ -83,14 +83,14 @@ const buildUpload = function (): void {
     }
   }
 
-  const uploadBtn: HTMLElement = document.querySelector('#upload') as HTMLElement
+  const uploadBtn: HTMLButtonElement = document.querySelector('#upload') as HTMLButtonElement
   uploadBtn.addEventListener('click', upload)
 }
 
 const buildLoader = function (): void {
-  const loader: HTMLElement = new Loader('loader-wrapper').element
+  const loader: HTMLDivElement = new Loader('loader-wrapper').element
 
-  const container: HTMLElement = document.querySelector('.container') as HTMLElement
+  const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement
   container.appendChild(loader)
 }
 

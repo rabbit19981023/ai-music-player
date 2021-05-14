@@ -1,7 +1,7 @@
 import createTypeSelect from '../helpers/typeSelect.js'
 
 export default class {
-  public element: HTMLElement
+  public element: HTMLDivElement
 
   constructor (selector: string) {
     this.element = document.createElement('div')
@@ -11,7 +11,7 @@ export default class {
   }
 
   private async build (): Promise<void> {
-    const autoNumbers: HTMLElement = document.createElement('div')
+    const autoNumbers: HTMLDivElement = document.createElement('div')
     autoNumbers.classList.add('auto-numbers')
     autoNumbers.innerHTML = (`
       <form action="/music-player" method="GET" class="auto-form">
@@ -23,13 +23,13 @@ export default class {
     `)
     this.element.appendChild(autoNumbers)
 
-    const advanceBtnDiv: HTMLElement = document.createElement('div')
+    const advanceBtnDiv: HTMLDivElement = document.createElement('div')
     advanceBtnDiv.innerHTML = (`
       <button type="button" class="btn btn-advance">進階產生</button>
     `)
     this.element.appendChild(advanceBtnDiv)
 
-    const formWrapper: HTMLElement = document.createElement('div')
+    const formWrapper: HTMLDivElement = document.createElement('div')
     formWrapper.innerHTML = (`
       <form action="/music-player" method="GET" class="advance-form">
         <span class="close-btn"></span>
@@ -72,14 +72,14 @@ export default class {
     `)
     this.element.appendChild(formWrapper)
 
-    const advanceBtn: HTMLElement = this.element.querySelector('.btn-advance') as HTMLElement
-    const advanceForm: HTMLElement = this.element.querySelector('.advance-form') as HTMLElement
+    const advanceBtn: HTMLButtonElement = this.element.querySelector('.btn-advance') as HTMLButtonElement
+    const advanceForm: HTMLFormElement = this.element.querySelector('.advance-form') as HTMLFormElement
     const displayForm = function (): void {
       advanceForm.classList.add('toggle')
     }
     advanceBtn.addEventListener('click', displayForm)
 
-    const closeBtn: HTMLElement = this.element.querySelector('.close-btn') as HTMLElement
+    const closeBtn: HTMLSpanElement = this.element.querySelector('.close-btn') as HTMLSpanElement
     const closeForm = function (): void {
       advanceForm.classList.remove('toggle')
     }
@@ -90,7 +90,7 @@ export default class {
       }
     })
 
-    const typeSelect: HTMLElement = this.element.querySelector('#type') as HTMLElement
+    const typeSelect: HTMLSelectElement = this.element.querySelector('#type') as HTMLSelectElement
     createTypeSelect(typeSelect)
 
     try {
@@ -104,7 +104,7 @@ export default class {
       const response = await fetch('/v1/api/tones/all')
       const allTones: ApiData = await response.json()
 
-      const toneSelector: HTMLElement = this.element.querySelector('#tone') as HTMLElement
+      const toneSelector: HTMLSelectElement = this.element.querySelector('#tone') as HTMLSelectElement
       for (let i in allTones) {
         const tone: string = allTones[i].info
 

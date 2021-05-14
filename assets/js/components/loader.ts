@@ -1,5 +1,5 @@
 export default class {
-  public element: HTMLElement
+  public element: HTMLDivElement
 
   constructor (selector: string) {
     this.element = document.createElement('div')

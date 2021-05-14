@@ -18,78 +18,112 @@ const buildMusicPlayer = async function (): Promise<void> {
     _v: string
   }
 
-  const getSongs = async function (): Promise<Song[] | null> {
+  const getSongs = async function (): Promise<Song[]> {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch('/v1/api/songs' + window.location.search)
         const songs: Song[] = await response.json()
 
         resolve(songs)
-      } catch (err) { reject(null) }
+      } catch (err) { reject(err) }
     })
   }
-  try {
-    const container: HTMLElement = document.querySelector('.container') as HTMLElement
-    const songs: Song[] | null = await getSongs()
 
-    const buildSongInfo = function (): HTMLElement {
-      const songInfo: HTMLElement = document.createElement('div')
+  try {
+    const songs: Song[] = await getSongs()
+
+    const buildSongInfo = function (): HTMLDivElement {
+      const songInfo: HTMLDivElement = document.createElement('div')
       songInfo.classList.add('song-info')
 
-      let firstSong: Song["data"] | { song_name: '查無歌曲', singer: '查無歌手' }
-
-      if (songs === null) {
-        firstSong = {
-          song_name: '查無歌曲',
-          singer: '查無歌手'
-        }
-      } else {
-        firstSong = songs[0].data
-      }
-
       songInfo.innerHTML = (`
-        <span class="song-name">${firstSong.song_name}</span>
+        <span class="song-name">查無歌曲</span>
         <span class="split"> - </span>
-        <span class="singer">${firstSong.singer}</span>
+        <span class="singer">查無歌手</span>
       `)
 
       return songInfo
     }
 
-    const buildTimeRange = function (): HTMLElement {
-      const timeRange: HTMLElement = document.createElement('div')
+    const buildTimeRange = function (): HTMLDivElement {
+      const timeRange: HTMLDivElement = document.createElement('div')
       timeRange.classList.add('time-range')
 
       timeRange.innerHTML = (`
-        <span class="current-time">00:00</span>
-        <input type="range">
-        <span class="song-time">00:00</span>
+        <span class="current-time">00 : 00</span>
+        <input type="range" value="0">
+        <span class="song-time"></span>
       `)
 
       return timeRange
     }
 
-    const buildSongControls = function (): HTMLElement {
-      const songControls: HTMLElement = document.createElement('div')
+    const buildSongControls = function (): HTMLDivElement {
+      const songControls: HTMLDivElement = document.createElement('div')
       songControls.classList.add('song-controls')
 
       songControls.innerHTML = (`
-        <i class="fas fa-backward"></i>
-        <i class="fas fa-pause"></i>
-        <i class="fas fa-forward"></i>
+        <i class="fas fa-backward pre"></i>
+        <i class="fas fa-pause play"></i>
+        <i class="fas fa-forward next"></i>
       `)
 
       return songControls
     }
 
-    const songInfo: HTMLElement = buildSongInfo()
-    const timeRange: HTMLElement = buildTimeRange()
-    const songControls: HTMLElement = buildSongControls()
+    const buildAudio = function () {
+      if (songs.length > 0) {
+        const audio: HTMLAudioElement = new Audio()
 
+        const playBtn: HTMLElement = document.querySelector('.play') as HTMLElement
+        const preBtn: HTMLElement = document.querySelector('.pre') as HTMLElement
+        const nextBtn: HTMLElement = document.querySelector('.next') as HTMLElement
+        const songRange: HTMLInputElement = document.querySelector('input[type="range"]') as HTMLInputElement
+
+        const songName: HTMLSpanElement = document.querySelector('.song-name') as HTMLSpanElement
+        const singer: HTMLSpanElement = document.querySelector('.singer') as HTMLSpanElement
+
+        const currentTime: HTMLSpanElement = document.querySelector('.current-time') as HTMLSpanElement
+        const songTime: HTMLSpanElement = document.querySelector('.song-time') as HTMLSpanElement
+
+        const firstSong: Song["data"] = songs[0].data
+        const currentSong: Song["data"] = firstSong
+
+        const buildSongMeta = function () {
+          songRange.max = String(audio.duration)
+
+          let minutes: number | string = Math.floor(audio.duration / 60)
+          if (minutes < 10) {
+            minutes = '0' + minutes
+          }
+
+          let seconds: number | string = Math.floor(audio.duration % 60)
+          if (seconds < 10) {
+            seconds = '0' + seconds
+          }
+          songTime.textContent = minutes + ' : ' + seconds
+        }
+
+        audio.src = 'http://163.18.42.232:8000/play?filename=' + currentSong.path
+        audio.addEventListener('loadedmetadata', buildSongMeta)
+
+        songName.textContent = currentSong.song_name
+        singer.textContent = currentSong.singer
+      }
+    }
+
+    const songInfo: HTMLDivElement = buildSongInfo()
+    const timeRange: HTMLDivElement = buildTimeRange()
+    const songControls: HTMLDivElement = buildSongControls()
+
+    const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement
     container.appendChild(songInfo)
     container.appendChild(timeRange)
     container.appendChild(songControls)
+
+    buildAudio()
   } catch (err) {
+    console.log(err)
     window.alert('伺服器錯誤2，請稍後再試！')
   }
 }

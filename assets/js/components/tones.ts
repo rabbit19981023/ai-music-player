@@ -1,5 +1,5 @@
 export default class {
-  public element: HTMLElement
+  public element: HTMLDivElement
 
   constructor (selector: string) {
     this.element = document.createElement('div')
@@ -9,7 +9,7 @@ export default class {
   }
 
   private async build (): Promise<void> {
-    const tonesWrapper: HTMLElement = document.createElement('div')
+    const tonesWrapper: HTMLDivElement = document.createElement('div')
 
     try {
       type ApiData = {
