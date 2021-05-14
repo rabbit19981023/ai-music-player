@@ -64,7 +64,7 @@ const buildMusicPlayer = async function (): Promise<void> {
 
       songControls.innerHTML = (`
         <i class="fas fa-backward pre"></i>
-        <i class="fas fa-pause play"></i>
+        <i class="fas fa-play play"></i>
         <i class="fas fa-forward next"></i>
       `)
 
@@ -109,6 +109,36 @@ const buildMusicPlayer = async function (): Promise<void> {
 
         songName.textContent = currentSong.song_name
         singer.textContent = currentSong.singer
+
+        const changeSongTime = function () {
+          audio.currentTime = parseInt(songRange.value)
+        }
+        songRange.addEventListener('change', changeSongTime)
+
+        const changeRange = function () {
+          songRange.value = String(audio.currentTime)
+        }
+        audio.addEventListener('timeupdate', changeRange)
+
+        let isPlaying = false
+
+        const playSong = function () {
+          if (!isPlaying) {
+            playBtn.classList.remove('fa-play')
+            playBtn.classList.add('fa-pause')
+
+            audio.play()
+            isPlaying = true
+            return
+          }
+
+          playBtn.classList.remove('fa-pause')
+          playBtn.classList.add('fa-play')
+
+          audio.pause()
+          isPlaying = false
+        }
+        playBtn.addEventListener('click', playSong)
       }
     }
 
