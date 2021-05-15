@@ -137,7 +137,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('timeupdate', changeRange)
 
-        let isPlaying = false
+        let isPlaying: boolean = false
         const playSong = function () {
           if (!isPlaying) {
             playBtn.classList.remove('fa-play')
@@ -186,7 +186,8 @@ const buildMusicPlayer = async function (): Promise<void> {
           songName.textContent = song.song_name
           singer.textContent = song.singer
 
-          audio.play()
+          isPlaying = false
+          playSong()
         }
         preBtn.addEventListener('click', playPreSong)
 
@@ -203,7 +204,8 @@ const buildMusicPlayer = async function (): Promise<void> {
           songName.textContent = song.song_name
           singer.textContent = song.singer
 
-          audio.play()
+          isPlaying = false
+          playSong()
         }
         nextBtn.addEventListener('click', playNextSong)
       }
