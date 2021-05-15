@@ -52,7 +52,7 @@ const buildMusicPlayer = async function (): Promise<void> {
       timeRange.innerHTML = (`
         <span class="current-time">00 : 00</span>
         <input type="range" value="0">
-        <span class="song-time"></span>
+        <span class="song-time">00 : 00</span>
       `)
 
       return timeRange
@@ -86,42 +86,58 @@ const buildMusicPlayer = async function (): Promise<void> {
         const currentTime: HTMLSpanElement = document.querySelector('.current-time') as HTMLSpanElement
         const songTime: HTMLSpanElement = document.querySelector('.song-time') as HTMLSpanElement
 
-        const firstSong: Song["data"] = songs[0].data
-        const currentSong: Song["data"] = firstSong
+        let songCount: number = 0
+        const currentSong: Song["data"] = songs[songCount].data
+
+        audio.src = 'http://163.18.42.232:8000/play?filename=' + currentSong.path
+        songName.textContent = currentSong.song_name
+        singer.textContent = currentSong.singer
 
         const buildSongMeta = function () {
-          songRange.max = String(audio.duration)
+          const songDuration: number = audio.duration
 
-          let minutes: number | string = Math.floor(audio.duration / 60)
+          songRange.max = String(songDuration)
+
+          let minutes: number | string = Math.floor(songDuration / 60)
           if (minutes < 10) {
             minutes = '0' + minutes
           }
 
-          let seconds: number | string = Math.floor(audio.duration % 60)
+          let seconds: number | string = Math.floor(songDuration % 60)
           if (seconds < 10) {
             seconds = '0' + seconds
           }
-          songTime.textContent = minutes + ' : ' + seconds
-        }
 
-        audio.src = 'http://163.18.42.232:8000/play?filename=' + currentSong.path
+          songTime.textContent = `${minutes} : ${seconds}`
+        }
         audio.addEventListener('loadedmetadata', buildSongMeta)
 
-        songName.textContent = currentSong.song_name
-        singer.textContent = currentSong.singer
-
+        // 'change' Event will be emit when user change the input[type="range"]
         const changeSongTime = function () {
           audio.currentTime = parseInt(songRange.value)
         }
         songRange.addEventListener('change', changeSongTime)
 
         const changeRange = function () {
-          songRange.value = String(audio.currentTime)
+          const songCurrentTime: number = audio.currentTime
+
+          songRange.value = String(songCurrentTime)
+
+          let minutes: number | string = Math.floor(songCurrentTime / 60)
+          if (minutes < 10) {
+            minutes = '0' + minutes
+          }
+
+          let seconds: number | string = Math.floor(songCurrentTime % 60)
+          if (seconds < 10) {
+            seconds = '0' + seconds
+          }
+
+          currentTime.textContent = `${minutes} : ${seconds}`
         }
         audio.addEventListener('timeupdate', changeRange)
 
         let isPlaying = false
-
         const playSong = function () {
           if (!isPlaying) {
             playBtn.classList.remove('fa-play')
@@ -139,6 +155,57 @@ const buildMusicPlayer = async function (): Promise<void> {
           isPlaying = false
         }
         playBtn.addEventListener('click', playSong)
+
+        const songEnd = function () {
+          songCount += 1
+
+          if (songCount > (songs.length - 1)) {
+            songCount = 0
+          }
+
+          const song: Song["data"] = songs[songCount].data
+
+          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
+          songName.textContent = song.song_name
+          singer.textContent = song.singer
+
+          audio.play()
+        }
+        audio.addEventListener('ended', songEnd)
+
+        const playPreSong = function () {
+          songCount -= 1
+
+          if (songCount < 0) {
+            songCount = songs.length - 1
+          }
+
+          const song: Song["data"] = songs[songCount].data
+
+          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
+          songName.textContent = song.song_name
+          singer.textContent = song.singer
+
+          audio.play()
+        }
+        preBtn.addEventListener('click', playPreSong)
+
+        const playNextSong = function () {
+          songCount += 1
+
+          if (songCount > (songs.length - 1)) {
+            songCount = 0
+          }
+
+          const song: Song["data"] = songs[songCount].data
+
+          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
+          songName.textContent = song.song_name
+          singer.textContent = song.singer
+
+          audio.play()
+        }
+        nextBtn.addEventListener('click', playNextSong)
       }
     }
 
