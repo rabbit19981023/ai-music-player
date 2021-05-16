@@ -40,17 +40,12 @@ const buildMusicPlayer = async function (): Promise<void> {
       songInfo.classList.add('song-info')
 
       songInfo.innerHTML = (`
-        <img class="song-img">
-
         <center>
-          <div>
-            <center>
-              <span class="song-name">查無歌曲</span>
-              <span class="split"> - </span>
-              <span class="singer">查無歌手</span>
-            </center>
-          </div>
+          <img class="song-img">
         </center>
+
+        <span class="song-name">查無歌曲</span>
+        <span class="singer">查無歌手</span>
 
         <hr>
       `)
@@ -78,11 +73,9 @@ const buildMusicPlayer = async function (): Promise<void> {
       songControls.classList.add('song-controls')
 
       songControls.innerHTML = (`
-        <center>
-          <i class="fas fa-backward pre"></i>
-          <i class="fas fa-play play"></i>
-          <i class="fas fa-forward next"></i>
-        </center>
+        <i class="fas fa-backward pre"></i>
+        <i class="fas fa-play play"></i>
+        <i class="fas fa-forward next"></i>
       `)
 
       return songControls

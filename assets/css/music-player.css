@@ -4,62 +4,57 @@ body {
 }
 
 .container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0;
+  margin: 0;
 }
 
 .music-player {
+  position: fixed;
   background-color: #ead0d196;
-  border-radius: 5px;
-  padding: 15px;
-  margin-top: 50vh;
-}
-
-@media screen and (max-width: 576px) {
-  .music-player {
-    margin-top: 63vh;
-  }
+  padding: 40px;
+  width: 100vw;
+  height: 100vh;
 }
 
 span,
-hr,
 i {
   color: #656565;
   opacity: 1;
 }
 
-span {
-  font-size: 20px;
-  font-weight: 700;
-}
-
-hr {
-  height: 5px;
-}
-
 .song-img {
-  position: fixed;
-  top: 30vh;
-  left: 50%;
-  transform: translateX(-50%);
   width: 240px;
   height: 180px;
   border: 5px solid #f0ebe599;
   border-radius: 5px;
+  margin-bottom: 40px;
 }
 
-@media screen and (max-width: 576px) {
-  .song-img {
-    top: 35vh;
-  }
+.song-name {
+  display: block;
+  font-size: 28px;
+  font-weight: 550;
+}
+
+.singer {
+  display: block;
+  font-size: 18px;
+  font-weight: 550;
+  opacity: 0.65;
+}
+
+hr {
+  height: 5px;
+  margin-top: 80px;
 }
 
 .time-range {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-top: 15px;
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: 550;
 }
 
 input[type="range"] {
@@ -80,5 +75,41 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 i {
-  margin: 15px;
+  font-size: 26px;
+  margin: 22px;
+}
+
+.time-range {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20vh;
+}
+
+.song-controls {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  bottom: 5vh;
+}
+
+@media screen and (min-width: 576px) {
+  .music-player {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 70%;
+    padding: 70px;
+    border-radius: 5px;
+  }
+
+  hr {
+    margin-top: 60px;
+  }
+
+  .time-range {
+    bottom: 13vh;
+  }
 }
