@@ -12,4 +12,6 @@ router.get('/songs', apiController.getSongs)
 
 router.post('/songs', apiController.addSong)
 
+// router.get('/test', apiController.test)
+
 export default router

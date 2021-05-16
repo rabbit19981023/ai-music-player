@@ -161,16 +161,29 @@ export default {
   // POST '/v1/api/songs'
   addSong: async function (req: Request, res: Response): Promise<void> {
     const song: SongData = JSON.parse(req.body.song_data)
+
+    // Re-generate SongData.bpm
     song.bpm = parseInt(song.bpm as string) // parsing string to number, to make number comparison possible
 
+    // Generate SongData.keywords
     const keywords: string[] = []
     for (let list in song.nlp_psg) {
-      for (let i in song.nlp_psg[list] as string[]) {
-        keywords.push(song.nlp_psg[list][i] as string)
+      for (let i in song.nlp_psg[list]) {
+        keywords.push(song.nlp_psg[list][i])
       }
     }
-
     song.keywords = keywords
+
+    // Generate SongData.youtube_thumbnail
+    const url: string = song.media_url
+    let id: string = 'id-not-find'
+    if (url.includes('?v=')) {
+      id = url.split('?v=')[1]
+    }
+    if (url.includes('youtu.be/')) {
+      id = url.split('youtu.be/')[1]
+    }
+    song.youtube_thumbnail = `https://i.ytimg.com/vi/${id}/sddefault.jpg`
 
     try {
       const result: Song | null = await SongModel.add(song)
@@ -182,5 +195,13 @@ export default {
       
       res.json({ status: 'Error' })
     } catch (err) { res.json({ status: 'Server Error' }) }
+  },
+
+  /**
+  test: async function (req: Request, res: Response) {
+    const songs = await SongModel.test()
+
+    res.json(songs)
   }
+  **/
 }

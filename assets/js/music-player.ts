@@ -9,6 +9,7 @@ const buildMusicPlayer = async function (): Promise<void> {
       bpm: number,
       tone: string,
       media_url: string,
+      youtube_thumbnail: string,
       path: string,
       nlp_psg: [list: string[]],
       keywords: string[],
@@ -37,9 +38,14 @@ const buildMusicPlayer = async function (): Promise<void> {
       songInfo.classList.add('song-info')
 
       songInfo.innerHTML = (`
-        <span class="song-name">查無歌曲</span>
-        <span class="split"> - </span>
-        <span class="singer">查無歌手</span>
+        <img class="song-img">
+        <div>
+          <center>
+            <span class="song-name">查無歌曲</span>
+            <span class="split"> - </span>
+            <span class="singer">查無歌手</span>
+          </center>
+        </div>
       `)
 
       return songInfo
@@ -82,6 +88,7 @@ const buildMusicPlayer = async function (): Promise<void> {
 
         const songName: HTMLSpanElement = document.querySelector('.song-name') as HTMLSpanElement
         const singer: HTMLSpanElement = document.querySelector('.singer') as HTMLSpanElement
+        const songImg: HTMLImageElement = document.querySelector('.song-img') as HTMLImageElement
 
         const currentTime: HTMLSpanElement = document.querySelector('.current-time') as HTMLSpanElement
         const songTime: HTMLSpanElement = document.querySelector('.song-time') as HTMLSpanElement
@@ -92,6 +99,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         audio.src = 'http://163.18.42.232:8000/play?filename=' + currentSong.path
         songName.textContent = currentSong.song_name
         singer.textContent = currentSong.singer
+        songImg.src = currentSong.youtube_thumbnail
 
         const buildSongMeta = function () {
           const songDuration: number = audio.duration
@@ -144,6 +152,7 @@ const buildMusicPlayer = async function (): Promise<void> {
             playBtn.classList.add('fa-pause')
 
             audio.play()
+            songImg.classList.add('img-rotate')
             isPlaying = true
             return
           }
@@ -152,9 +161,17 @@ const buildMusicPlayer = async function (): Promise<void> {
           playBtn.classList.add('fa-play')
 
           audio.pause()
+          songImg.classList.remove('img-rotate')
           isPlaying = false
         }
         playBtn.addEventListener('click', playSong)
+
+        const changeSong = function (song: Song["data"]) {
+          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
+          songName.textContent = song.song_name
+          singer.textContent = song.singer
+          songImg.src = song.youtube_thumbnail
+        }
 
         const songEnd = function () {
           songCount += 1
@@ -164,10 +181,7 @@ const buildMusicPlayer = async function (): Promise<void> {
           }
 
           const song: Song["data"] = songs[songCount].data
-
-          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
-          songName.textContent = song.song_name
-          singer.textContent = song.singer
+          changeSong(song)
 
           audio.play()
         }
@@ -181,10 +195,7 @@ const buildMusicPlayer = async function (): Promise<void> {
           }
 
           const song: Song["data"] = songs[songCount].data
-
-          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
-          songName.textContent = song.song_name
-          singer.textContent = song.singer
+          changeSong(song)
 
           isPlaying = false
           playSong()
@@ -199,16 +210,17 @@ const buildMusicPlayer = async function (): Promise<void> {
           }
 
           const song: Song["data"] = songs[songCount].data
-
-          audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
-          songName.textContent = song.song_name
-          singer.textContent = song.singer
+          changeSong(song)
 
           isPlaying = false
           playSong()
         }
         nextBtn.addEventListener('click', playNextSong)
       }
+    }
+
+    const buildSongList = function () {
+      
     }
 
     const songInfo: HTMLDivElement = buildSongInfo()
