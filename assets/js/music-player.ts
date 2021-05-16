@@ -141,10 +141,11 @@ const buildMusicPlayer = async function (): Promise<void> {
         const changeSongTime = function () {
           audio.currentTime = parseInt(songRange.value)
         }
-        songRange.addEventListener('change', changeSongTime)
+        songRange.addEventListener('input', changeSongTime)
 
-        // 'Audio.timeupdate' Event Listener
-        const changeRange = function () {
+        // update Range & <minutes>:<seconds> while Playing
+        let updateAnimation: number | null = null
+        const updateRangeAndTime = function () {
           const songCurrentTime: number = audio.currentTime
 
           songRange.value = String(songCurrentTime)
@@ -160,18 +161,20 @@ const buildMusicPlayer = async function (): Promise<void> {
           }
 
           currentTime.textContent = `${minutes} : ${seconds}`
+
+          updateAnimation = requestAnimationFrame(updateRangeAndTime)
         }
-        audio.addEventListener('timeupdate', changeRange)
 
         // PlaySong Function
         let isPlaying: boolean = false
+        
         const playSong = function () {
           if (!isPlaying) {
             playBtn.classList.remove('fa-play')
             playBtn.classList.add('fa-pause')
 
             audio.play()
-            songImg.classList.add('img-rotate')
+            requestAnimationFrame(updateRangeAndTime)
             isPlaying = true
             return
           }
@@ -180,7 +183,7 @@ const buildMusicPlayer = async function (): Promise<void> {
           playBtn.classList.add('fa-play')
 
           audio.pause()
-          songImg.classList.remove('img-rotate')
+          cancelAnimationFrame(updateAnimation)
           isPlaying = false
         }
         playBtn.addEventListener('click', playSong)
