@@ -45,7 +45,7 @@ i {
 
 hr {
   height: 5px;
-  margin-top: 60px;
+  margin-top: 50px;
 }
 
 .time-range {
@@ -83,7 +83,7 @@ i {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 15vh;
+  bottom: 25vh;
 }
 
 .song-controls {
