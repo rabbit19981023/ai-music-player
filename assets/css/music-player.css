@@ -45,7 +45,7 @@ i {
 
 hr {
   height: 5px;
-  margin-top: 80px;
+  margin-top: 60px;
 }
 
 .time-range {
@@ -83,7 +83,7 @@ i {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 20vh;
+  bottom: 15vh;
 }
 
 .song-controls {
@@ -91,7 +91,7 @@ i {
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  bottom: 5vh;
+  bottom: 10vh;
 }
 
 @media screen and (min-width: 576px) {
