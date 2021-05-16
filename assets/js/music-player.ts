@@ -89,7 +89,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     }
 
     /** Core Music-Player Features **/
-    const buildAudio = function () {
+    const buildAudio = function (): void {
       if (songs.length > 0) {
         // Audio Element Init
         const audio: HTMLAudioElement = new Audio()
@@ -116,12 +116,13 @@ const buildMusicPlayer = async function (): Promise<void> {
         singer.textContent = currentSong.singer
         songImg.src = currentSong.youtube_thumbnail
 
-        // 'Audio.loadedmetadata' Event Listener
-        const buildSongMeta = function () {
+        // 'Audio.loaded-metadata' Event Listener
+        const buildSongMeta: EventListener = function () {
+          // set range.max to song-duration
           const songDuration: number = audio.duration
-
           songRange.max = String(songDuration)
 
+          // get song-full-time from meta-data
           let minutes: number | string = Math.floor(songDuration / 60)
           if (minutes < 10) {
             minutes = '0' + minutes
@@ -136,20 +137,19 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('loadedmetadata', buildSongMeta)
 
-        // 'Range.change' Event Listener
-        // 'Range.change' Event Triggered when user change the input[type="range"]
-        const changeSongTime = function () {
+        // 'input[type="range"].input' Event Listener
+        const changeSongTime: EventListener = function () {
           audio.currentTime = parseInt(songRange.value)
         }
         songRange.addEventListener('input', changeSongTime)
 
         // update Range & <minutes>:<seconds> while Playing
-        let updateAnimation: number | null = null
-        const updateRangeAndTime = function () {
+        const updateRangeAndTime: EventListener = function () {
+          // set range.value to song-current-time
           const songCurrentTime: number = audio.currentTime
-
           songRange.value = String(songCurrentTime)
 
+          // set song-current-time
           let minutes: number | string = Math.floor(songCurrentTime / 60)
           if (minutes < 10) {
             minutes = '0' + minutes
@@ -161,29 +161,23 @@ const buildMusicPlayer = async function (): Promise<void> {
           }
 
           currentTime.textContent = `${minutes} : ${seconds}`
-
-          updateAnimation = requestAnimationFrame(updateRangeAndTime)
         }
+        audio.addEventListener('timeupdate', updateRangeAndTime)
 
         // PlaySong Function
         let isPlaying: boolean = false
-        
         const playSong = function () {
           if (!isPlaying) {
             playBtn.classList.remove('fa-play')
             playBtn.classList.add('fa-pause')
-
             audio.play()
-            requestAnimationFrame(updateRangeAndTime)
             isPlaying = true
             return
           }
 
           playBtn.classList.remove('fa-pause')
           playBtn.classList.add('fa-play')
-
           audio.pause()
-          cancelAnimationFrame(updateAnimation)
           isPlaying = false
         }
         playBtn.addEventListener('click', playSong)
@@ -197,24 +191,25 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
 
         // 'Audio.ended' Event Listener
-        const songEnd = function () {
+        const songEnd: EventListener = function () {
           songCount += 1
 
+          // back to first-song while out-of-index
           if (songCount > (songs.length - 1)) {
             songCount = 0
           }
 
           const song: Song["data"] = songs[songCount].data
           changeSong(song)
-
           audio.play()
         }
         audio.addEventListener('ended', songEnd)
 
         // 'preBtn.click' Event Listener
-        const playPreSong = function () {
+        const playPreSong: EventListener = function () {
           songCount -= 1
 
+          // jump to last-song while index=-1
           if (songCount < 0) {
             songCount = songs.length - 1
           }
@@ -228,9 +223,10 @@ const buildMusicPlayer = async function (): Promise<void> {
         preBtn.addEventListener('click', playPreSong)
 
         // 'nextBtn.click' Event Listener
-        const playNextSong = function () {
+        const playNextSong: EventListener = function () {
           songCount += 1
 
+          // back to first-song while out-of-index
           if (songCount > (songs.length - 1)) {
             songCount = 0
           }
@@ -263,10 +259,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     container.appendChild(musicPlayer)
     
     buildAudio()
-  } catch (err) {
-    console.log(err)
-    window.alert('伺服器錯誤2，請稍後再試！')
-  }
+  } catch (err) { window.alert('伺服器錯誤2，請稍後再試！') }
 }
 
 buildMusicPlayer()
