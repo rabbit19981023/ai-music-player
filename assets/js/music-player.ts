@@ -19,6 +19,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     _v: string
   }
 
+  // Get All Hymns
   const getSongs = async function (): Promise<Song[]> {
     return new Promise(async (resolve, reject) => {
       try {
@@ -33,24 +34,31 @@ const buildMusicPlayer = async function (): Promise<void> {
   try {
     const songs: Song[] = await getSongs()
 
+    // Div.song-info
     const buildSongInfo = function (): HTMLDivElement {
       const songInfo: HTMLDivElement = document.createElement('div')
       songInfo.classList.add('song-info')
 
       songInfo.innerHTML = (`
         <img class="song-img">
-        <div>
-          <center>
-            <span class="song-name">查無歌曲</span>
-            <span class="split"> - </span>
-            <span class="singer">查無歌手</span>
-          </center>
-        </div>
+
+        <center>
+          <div>
+            <center>
+              <span class="song-name">查無歌曲</span>
+              <span class="split"> - </span>
+              <span class="singer">查無歌手</span>
+            </center>
+          </div>
+        </center>
+
+        <hr>
       `)
 
       return songInfo
     }
 
+    // Div.time-range
     const buildTimeRange = function (): HTMLDivElement {
       const timeRange: HTMLDivElement = document.createElement('div')
       timeRange.classList.add('time-range')
@@ -64,23 +72,29 @@ const buildMusicPlayer = async function (): Promise<void> {
       return timeRange
     }
 
+    // Div.song-sontrols
     const buildSongControls = function (): HTMLDivElement {
       const songControls: HTMLDivElement = document.createElement('div')
       songControls.classList.add('song-controls')
 
       songControls.innerHTML = (`
-        <i class="fas fa-backward pre"></i>
-        <i class="fas fa-play play"></i>
-        <i class="fas fa-forward next"></i>
+        <center>
+          <i class="fas fa-backward pre"></i>
+          <i class="fas fa-play play"></i>
+          <i class="fas fa-forward next"></i>
+        </center>
       `)
 
       return songControls
     }
 
+    /** Core Music-Player Features **/
     const buildAudio = function () {
       if (songs.length > 0) {
+        // Audio Element Init
         const audio: HTMLAudioElement = new Audio()
 
+        // Declare Variables
         const playBtn: HTMLElement = document.querySelector('.play') as HTMLElement
         const preBtn: HTMLElement = document.querySelector('.pre') as HTMLElement
         const nextBtn: HTMLElement = document.querySelector('.next') as HTMLElement
@@ -93,6 +107,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         const currentTime: HTMLSpanElement = document.querySelector('.current-time') as HTMLSpanElement
         const songTime: HTMLSpanElement = document.querySelector('.song-time') as HTMLSpanElement
 
+        // Music-Player Init
         let songCount: number = 0
         const currentSong: Song["data"] = songs[songCount].data
 
@@ -101,6 +116,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         singer.textContent = currentSong.singer
         songImg.src = currentSong.youtube_thumbnail
 
+        // 'Audio.loadedmetadata' Event Listener
         const buildSongMeta = function () {
           const songDuration: number = audio.duration
 
@@ -120,12 +136,14 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('loadedmetadata', buildSongMeta)
 
-        // 'change' Event will be emit when user change the input[type="range"]
+        // 'Range.change' Event Listener
+        // 'Range.change' Event Triggered when user change the input[type="range"]
         const changeSongTime = function () {
           audio.currentTime = parseInt(songRange.value)
         }
         songRange.addEventListener('change', changeSongTime)
 
+        // 'Audio.timeupdate' Event Listener
         const changeRange = function () {
           const songCurrentTime: number = audio.currentTime
 
@@ -145,6 +163,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('timeupdate', changeRange)
 
+        // PlaySong Function
         let isPlaying: boolean = false
         const playSong = function () {
           if (!isPlaying) {
@@ -166,6 +185,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         playBtn.addEventListener('click', playSong)
 
+        // ChangeSong Function
         const changeSong = function (song: Song["data"]) {
           audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
           songName.textContent = song.song_name
@@ -173,6 +193,7 @@ const buildMusicPlayer = async function (): Promise<void> {
           songImg.src = song.youtube_thumbnail
         }
 
+        // 'Audio.ended' Event Listener
         const songEnd = function () {
           songCount += 1
 
@@ -187,6 +208,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('ended', songEnd)
 
+        // 'preBtn.click' Event Listener
         const playPreSong = function () {
           songCount -= 1
 
@@ -202,6 +224,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         preBtn.addEventListener('click', playPreSong)
 
+        // 'nextBtn.click' Event Listener
         const playNextSong = function () {
           songCount += 1
 
@@ -227,11 +250,15 @@ const buildMusicPlayer = async function (): Promise<void> {
     const timeRange: HTMLDivElement = buildTimeRange()
     const songControls: HTMLDivElement = buildSongControls()
 
-    const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement
-    container.appendChild(songInfo)
-    container.appendChild(timeRange)
-    container.appendChild(songControls)
+    const musicPlayer: HTMLDivElement = document.createElement('div')
+    musicPlayer.classList.add('music-player')
+    musicPlayer.appendChild(songInfo)
+    musicPlayer.appendChild(timeRange)
+    musicPlayer.appendChild(songControls)
 
+    const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement
+    container.appendChild(musicPlayer)
+    
     buildAudio()
   } catch (err) {
     console.log(err)
