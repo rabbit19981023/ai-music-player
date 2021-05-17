@@ -142,6 +142,9 @@ const buildMusicPlayer = async function (): Promise<void> {
           const songCurrentTime: number = audio.currentTime
           songRange.value = String(songCurrentTime)
 
+          // set played-width-color css property
+          songRange.style.setProperty('--played-width', `${(parseInt(songRange.value) / parseInt(songRange.max)) * 100}%`)
+
           // set song-current-time
           let minutes: number | string = Math.floor(songCurrentTime / 60)
           if (minutes < 10) {

@@ -58,6 +58,7 @@ hr {
 }
 
 input[type="range"] {
+  position: relative;
   appearance: none;
   width: auto;
   height: 5px;
@@ -71,6 +72,15 @@ input[type="range"]::-webkit-slider-thumb {
   width: 15px;
   height: 15px;
   border-radius: 50%;
+  background-color: #656565;
+}
+
+input[type="range"]::before {
+  content: '';
+  position: absolute;
+  height: 5px;  
+  width: var(--played-width);
+  border-radius: 5px;
   background-color: #656565;
 }
 
