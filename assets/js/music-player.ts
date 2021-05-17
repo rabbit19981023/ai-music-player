@@ -130,13 +130,13 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         audio.addEventListener('loadedmetadata', buildSongMeta)
 
-        // 'input[type="range"].input' Event Listener
+        // 'Input[type="range"].input' Event Listener
         const changeSongTime: EventListener = function () {
           audio.currentTime = parseInt(songRange.value)
         }
         songRange.addEventListener('input', changeSongTime)
 
-        // update Range & <minutes>:<seconds> while Playing
+        // 'Audio.time-update' Event Listener
         const updateRangeAndTime: EventListener = function () {
           // set range.value to song-current-time
           const songCurrentTime: number = audio.currentTime

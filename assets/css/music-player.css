@@ -83,7 +83,7 @@ i {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 25vh;
+  bottom: 130px;
 }
 
 .song-controls {
@@ -91,7 +91,7 @@ i {
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  bottom: 10vh;
+  bottom: 40px;
 }
 
 @media screen and (min-width: 576px) {
@@ -99,17 +99,28 @@ i {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto;
-    height: 70%;
-    padding: 70px;
-    border-radius: 5px;
+    width: 40vw;
+    height: 60vh;
   }
+}
 
-  hr {
-    margin-top: 60px;
+@media screen and (min-width: 768.99px) {
+  .music-player {
+    width: 25vw;
+    height: 70vh;
   }
+}
 
-  .time-range {
-    bottom: 13vh;
+@media screen and (min-width: 1024px) {
+  .music-player {
+    width: 35vw;
+    height: 80vh;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .music-player {
+    width: 25vw;
+    height: 70vh;
   }
 }
