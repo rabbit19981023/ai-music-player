@@ -18,13 +18,17 @@
 }
 
 .auto-label {
-  color: #7a4171;
-  text-shadow: 4px 4px 3px#deb068;
-  font-weight: 600;
+  color: #965454;
+  text-shadow: 3px 3px 5px#fffef4;
+  font-weight: 900;
 }
 
 .auto-numbers {
   padding: 3px 0px;
+}
+
+.auto-numbers .form-control {
+  color: #965454;
 }
 
 .auto-form {
@@ -43,19 +47,21 @@
 }
 
 .btn-auto {
-  color: #80aba9;
+  color: #96a48b;
+  background-color: #e0e5df33;
   font-weight: 550;
   padding: 3px 8px;
-  border: 1px solid #80aba9;
+  border: 1px solid #96a48b;
 }
 
 .btn-auto:hover {
   color: #ffffff;
-  background-color: #80aba990;
+  background-color: #96a48b;
 }
 
 .btn-advance {
   color: #c89932;
+  background-color: #e0e5df33;
   font-weight: 550;
   padding: 3px 10px;
   border: 1px solid #c89932;
@@ -74,10 +80,8 @@
   left: 50%;
   transform: translate(-50%, -50%) scale(0.3);
   padding: 30px;
-  background-color: #d8caaf;
-  border: 1.5px solid rgba(255, 255, 255, 38%);
+  background-color: #d6cbdf;
   border-radius: 5px;
-  box-shadow: 3px 3px 15px rgba(255, 255, 255, 38%);
   overflow-y: hidden;
   white-space: nowrap;
   transition: 0.4s;
@@ -92,7 +96,7 @@
 
 .advance-form .close-btn::after {
   content: 'x';
-  color: #7b8b6f;
+  color: #3f3424;
   font-size: 23px;
   font-weight: 550;
   position: absolute;
@@ -109,13 +113,18 @@
 }
 
 .advance-label {
-  color: #656565;
+  color: #3f3424;
   text-shadow: none;
   font-weight: 550;
 }
 
 .advance-form > div label {
   margin-right: 5px;
+}
+
+.advance-form .form-control,
+.advance-form .form-select {
+  color: #3f3424dc;
 }
 
 .advance-form .speed-wrapper span:nth-of-type(1) {
@@ -127,12 +136,12 @@
 }
 
 .btn-submit {
-  color: #7b8b6f;
+  color: #3f3424;
   font-weight: 550;
-  border: 1px solid #7b8b6f;
+  border: 1px solid #3f3424;
 }
 
 .btn-submit:hover {
   color: #fff;
-  background-color: #7b8b6f;
+  background-color: #3f34244b;
 }

@@ -3,7 +3,7 @@
   width: 130px;
   height: 130px;
   margin: 5px;
-  background-color: #e4d28ba2; /** 最後兩碼代表顏色透明度 **/
+  background-color: #ececeaa2; /** 最後兩碼代表顏色透明度 **/
   padding: 3px;
   border: 1px solid rgba(255, 255, 255, 38%);
 }
@@ -16,5 +16,5 @@
 .card-info {
   font-weight: 550;
   margin-top: 10px;
-  color: #2c4f54;
+  color: #965454;
 }
