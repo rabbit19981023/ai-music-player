@@ -83,7 +83,7 @@ i {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 145px;
+  bottom: 170px;
 }
 
 .song-controls {
@@ -91,7 +91,7 @@ i {
   left: 50%;
   transform: translateX(-50%);
   white-space: nowrap;
-  bottom: 55px;
+  bottom: 65px;
 }
 
 @media screen and (min-width: 576px) {
