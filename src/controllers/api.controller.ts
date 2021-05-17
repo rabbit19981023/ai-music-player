@@ -195,13 +195,5 @@ export default {
       
       res.json({ status: 'Error' })
     } catch (err) { res.json({ status: 'Server Error' }) }
-  },
-
-  /**
-  test: async function (req: Request, res: Response) {
-    const songs = await SongModel.test()
-
-    res.json(songs)
   }
-  **/
 }

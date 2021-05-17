@@ -70,38 +70,6 @@ const add = async function (song: SongData): Promise<Song | null> {
   })
 }
 
-/**
-async function test (): Promise<Song[]> {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const songs: Song[] = await SongModel.find()
-
-      for (let i = 0; i < songs.length; i++) {
-        const song: Song = songs[i]
-
-        const url: string = song.data.media_url
-        let id: string = ''
-        
-        if (url.includes('?v=')) {
-          id = url.split('?v=')[1]
-        }
-
-        if (url.includes('youtu.be/')) {
-          id = url.split('youtu.be/')[1]
-        }
-
-        const thumbnail = `https://i.ytimg.com/vi/${id}/hqdefault.jpg`
-
-        await SongModel.updateOne({ _id: song._id }, { "data.youtube_thumbnail": thumbnail })
-      }
-
-      const newSongs: Song[] = await SongModel.find()
-      resolve(newSongs)
-    } catch (err) { reject(err) }
-  })
-}
-**/
-
 export default {
   find: find,
   findOne: findOne,
