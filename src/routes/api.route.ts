@@ -9,7 +9,7 @@ router.get('/types-with-imgs/all', apiController.typesWithImgs)
 router.get('/tones/all', apiController.allTones)
 
 router.get('/songs', apiController.getSongs)
-
 router.post('/songs', apiController.addSong)
+router.patch('/songs', apiController.updateSong)
 
 export default router

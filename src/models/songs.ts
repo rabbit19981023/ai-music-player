@@ -47,7 +47,7 @@ const findOne = async function (filter: object): Promise<Song | null> {
   })
 }
 
-const add = async function (song: SongData): Promise<Song | null> {
+const addOne = async function (song: SongData): Promise<Song | null> {
   return new Promise(async (resolve, reject) => {
     try {
       const existSong: Song | null = await SongModel.findOne({
@@ -70,8 +70,13 @@ const add = async function (song: SongData): Promise<Song | null> {
   })
 }
 
+const updateOne = async function (song: SongData) {
+  await SongModel.updateOne() // return updated information, not document !!
+}
+
 export default {
   find: find,
   findOne: findOne,
-  add: add
+  addOne: addOne,
+  updateOne: updateOne
 }

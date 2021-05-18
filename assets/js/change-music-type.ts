@@ -1,4 +1,5 @@
 import Loader from './components/loader.js'
+import createTypeSelect from './helpers/typeSelect.js'
 
 type Song = {
   song_name: string,
@@ -8,13 +9,35 @@ type Song = {
   bpm: string,
   tone: string,
   media_url: string,
+  // youtube_thumbnail: string,
   path: string,
-  nlp_psg: object,
+  nlp_psg: [list: string[]],
+  // keywords: string[],
   status: string
 }
 
+const buildSongList = async function (): Promise<void> {
+  try {
+    const response = await fetch('/v1/api/songs')
+    const songs: Song[] = await response.json()
+
+    const songList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
+    for (let i in songs) {
+      const song: Song = songs[i]
+
+      songList.innerHTML += (`
+        <option value="${song.song_name}">
+      `)
+    }
+  } catch (err) { }
+}
+
+const buildTypeSelect = function (): void {
+  const typeSelect: HTMLSelectElement = document.querySelector('#song-type') as HTMLSelectElement
+  createTypeSelect(typeSelect)
+}
+
 const buildUpload = function (): void {
-  // event handler when upload-btn clicked
   const upload: EventListener = async function (): Promise<void> {
     const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
     const formData: FormData = new FormData(form)
@@ -25,20 +48,19 @@ const buildUpload = function (): void {
         body: formData
       }
 
-      // Active Loader Animation before Upload Music
+      // Active Loader Animation before sending HttpRequest
       const loader: HTMLDivElement = document.querySelector('.loader-wrapper') as HTMLDivElement
       loader.classList.add('active')
 
-      // Upload music to API server
-      const response = await fetch('http://163.18.42.232:8000/add_music', config)
+      const response = await fetch('', config)
       const apiData: Song = await response.json()
 
       switch (apiData.status) {
         case 'Done':
-          // add song data into MongoDB
-          const addSong = async function (song: Song): Promise<void> {
+          // update song data into MongoDB
+          const updateSong = async function (song: Song): Promise<void> {
             const config = {
-              method: 'POST',
+              method: 'PATCH', // update specific song's data_field (data_field: type)
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
               },
@@ -55,7 +77,7 @@ const buildUpload = function (): void {
                   window.alert('上傳成功！')
                   break
                 case 'Error':
-                  window.alert('這首歌已經被上傳過囉！')
+                  window.alert(`上傳失敗：在資料庫裡找不到 ${song.song_name} 這首歌！`)
                   break
                 case 'Server Error':
                   window.alert('伺服器處理錯誤2，請重上傳一次！')
@@ -64,20 +86,20 @@ const buildUpload = function (): void {
             } catch (err) { window.alert('無法連線伺服器2，請重上傳一次！') }
           }
 
-          await addSong(apiData)
-          // Redirect after addSong return Promise Result
-          window.location.href = '/add-music'
+          await updateSong(apiData)
+          // Redirect
+          window.location.href = '/change-music-type'
           break
         case 'Error':
           window.alert('上傳失敗：請確認表單是否填寫正確！')
           // Redirect
-          window.location.href = '/add-music'
+          window.location.href = '/change-music-type'
           break
       }
     } catch (err) {
       window.alert('無法連線伺服器1，請重上傳一次！')
       // Redirect
-      window.location.href = '/add-music'
+      window.location.href = '/change-music-type'
     }
   }
 
@@ -92,5 +114,7 @@ const buildLoader = function (): void {
   container.appendChild(loader)
 }
 
+buildSongList()
+buildTypeSelect()
 buildUpload()
 buildLoader()

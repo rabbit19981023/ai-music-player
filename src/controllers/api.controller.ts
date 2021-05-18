@@ -186,7 +186,7 @@ export default {
     song.youtube_thumbnail = `https://i.ytimg.com/vi/${id}/sddefault.jpg`
 
     try {
-      const result: Song | null = await SongModel.add(song)
+      const result: Song | null = await SongModel.addOne(song)
 
       if (result) {
         res.json({ status: 'Done' })
@@ -195,5 +195,10 @@ export default {
       
       res.json({ status: 'Error' })
     } catch (err) { res.json({ status: 'Server Error' }) }
+  },
+
+  // PATCH '/v1/api/songs'
+  updateSong: async function (req: Request, res: Response): Promise<void> {
+
   }
 }

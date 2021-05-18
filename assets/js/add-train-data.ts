@@ -7,7 +7,7 @@ const buildTypeSelect = function (): void {
 }
 
 const buildUpload = function (): void {
-  const upload = async function (): Promise<void> {
+  const upload: EventListener = async function (): Promise<void> {
     const form: HTMLFormElement = document.querySelector('form') as HTMLFormElement
     const formData: FormData = new FormData(form)
 
@@ -33,16 +33,15 @@ const buildUpload = function (): void {
         case 'Done':
           window.alert('上傳成功！')
           break
-
         case 'Error':
           window.alert('上傳失敗：請確認表單是否填寫錯誤！')
           break
       }
-
       // Redirect
       window.location.href = '/add-train-data'
     } catch (err) {
-      window.alert('無法連線伺服器，請重上傳一次！')
+      window.alert('無法連線伺服器1，請重上傳一次！')
+      // Redirect
       window.location.href = '/add-train-data'
     }
   }
