@@ -199,6 +199,19 @@ export default {
 
   // PATCH '/v1/api/songs'
   updateSong: async function (req: Request, res: Response): Promise<void> {
+    const song: Song["data"] = req.body.song_data
+    const filter = { "data.song_name": song.song_name }
+    const update = { "data.type": song.type }
 
+    try {
+      const result = await SongModel.updateOne(filter, update)
+
+      if (result.nModified > 0) {
+        res.json({ status: 'Done' })
+        return
+      }
+
+      res.json({ status: 'Error' })
+    } catch (err) { res.json({ status: 'Server Error' }) }
   }
 }

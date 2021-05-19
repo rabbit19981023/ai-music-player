@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document } from 'mongoose'
+import mongoose, { Schema, Model, Document, UpdateWriteOpResult } from 'mongoose'
 
 export type SongData = {
   song_name: string,
@@ -70,8 +70,13 @@ const addOne = async function (song: SongData): Promise<Song | null> {
   })
 }
 
-const updateOne = async function (song: SongData) {
-  await SongModel.updateOne() // return updated information, not document !!
+const updateOne = async function (filter: object, updates: object): Promise<UpdateWriteOpResult> {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result: UpdateWriteOpResult = await SongModel.updateOne(filter, updates)
+      resolve(result)
+    } catch (err) { reject(err) }
+  })
 }
 
 export default {
