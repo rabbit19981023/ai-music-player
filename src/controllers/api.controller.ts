@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { UpdateWriteOpResult } from 'mongoose'
 import fetch from 'node-fetch'
 
 import SongModel, { SongData, Song } from '../models/songs'
@@ -204,7 +205,7 @@ export default {
     const update = { "data.type": song.type }
 
     try {
-      const result = await SongModel.updateOne(filter, update)
+      const result: UpdateWriteOpResult = await SongModel.updateOne(filter, update)
 
       if (result.nModified > 0) {
         res.json({ status: 'Done' })
