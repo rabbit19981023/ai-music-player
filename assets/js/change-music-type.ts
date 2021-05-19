@@ -2,18 +2,23 @@ import Loader from './components/loader.js'
 import createTypeSelect from './helpers/typeSelect.js'
 
 type Song = {
-  song_name: string,
-  type: string,
-  genre: string,
-  singer: string,
-  bpm: string,
-  tone: string,
-  media_url: string,
-  // youtube_thumbnail: string,
-  path: string,
-  nlp_psg: [list: string[]],
-  // keywords: string[],
-  status: string
+  _id: string
+  data: {
+    song_name: string,
+    type: string,
+    genre: string,
+    singer: string,
+    bpm: string,
+    tone: string,
+    media_url: string,
+    youtube_thumbnail: string,
+    path: string,
+    nlp_psg: [list: string[]],
+    keywords: string[],
+    status: string
+  },
+  status: string,
+  _v: string
 }
 
 const buildSongList = async function (): Promise<void> {
@@ -23,7 +28,7 @@ const buildSongList = async function (): Promise<void> {
 
     const songList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
     for (let i in songs) {
-      const song: Song = songs[i]
+      const song: Song["data"] = songs[i].data
 
       songList.innerHTML += (`
         <option value="${song.song_name}">
@@ -53,12 +58,12 @@ const buildUpload = function (): void {
       loader.classList.add('active')
 
       const response = await fetch('', config)
-      const apiData: Song = await response.json()
+      const apiData: Song["data"] = await response.json()
 
       switch (apiData.status) {
         case 'Done':
           // update song data into MongoDB
-          const updateSong = async function (song: Song): Promise<void> {
+          const updateSong = async function (song: Song["data"]): Promise<void> {
             const config = {
               method: 'PATCH', // update specific song's data_field (data_field: type)
               headers: {
