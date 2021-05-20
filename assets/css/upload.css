@@ -13,6 +13,7 @@ label {
 
 form > div {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: max-content;
   margin: 15px 0;
@@ -27,6 +28,10 @@ input[type="file"],
 input[id="youtube-url"],
 textarea {
   max-width: 95%;
+}
+
+input[id="song-bpm"] {
+  max-width: 30%;
 }
 
 .btn-submit {

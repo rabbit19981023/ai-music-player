@@ -23,23 +23,93 @@ type Song = {
 
 const buildSongList = async function (): Promise<void> {
   try {
-    const response = await fetch('/v1/api/songs')
+    const response = await fetch('/v1/api/songs?order=true')
     const songs: Song[] = await response.json()
 
-    const songList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
+    const dataList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
     for (let i in songs) {
       const song: Song["data"] = songs[i].data
 
-      songList.innerHTML += (`
+      dataList.innerHTML += (`
         <option value="${song.song_name}">
       `)
     }
   } catch (err) { }
+
+  const updateData = async function (): Promise<void> {
+    try {
+      const response = await fetch('/v1/api/songs?order=true')
+      const songs: Song[] = await response.json()
+
+      const songList: string[] = []
+      for (let i in songs) {
+        songList.push(songs[i].data.song_name)
+      }
+
+      const songName: HTMLInputElement = document.querySelector('#song-name') as HTMLInputElement
+      const songType: HTMLSelectElement = document.querySelector('#song-type') as HTMLSelectElement
+      const songTone: HTMLSelectElement = document.querySelector('#song-tone') as HTMLSelectElement
+      const songBpm: HTMLInputElement = document.querySelector('#song-bpm') as HTMLInputElement
+
+      const updateData: EventListener = function () {
+        try {
+          const index = songList.indexOf(songName.value)
+          const song: Song["data"] = songs[index].data
+
+          songType.value = song.type
+          songTone.value = song.tone
+          songBpm.value = song.bpm
+        } catch (err) { }
+      }
+      songName.addEventListener('input', updateData)
+    } catch (err) { }
+  }
+
+  updateData()
 }
 
 const buildTypeSelect = function (): void {
   const typeSelect: HTMLSelectElement = document.querySelector('#song-type') as HTMLSelectElement
   createTypeSelect(typeSelect)
+}
+
+const buildToneSelect = function (): void {
+  const toneSelect: HTMLSelectElement = document.querySelector('#song-tone') as HTMLSelectElement
+  
+  const tones: string[] = [
+    'C,major',
+    'C#,major',
+    'D,major',
+    'D#,major',
+    'E,major',
+    'F,major',
+    'F#,major',
+    'G,major',
+    'G#,major',
+    'A,major',
+    'A#,major',
+    'B,major',
+    'C,minor',
+    'C#,minor',
+    'D,minor',
+    'D#,minor',
+    'E,minor',
+    'F,minor',
+    'F#,minor',
+    'G,minor',
+    'G#,minor',
+    'A,minor',
+    'A#,minor',
+    'B,minor',
+  ]
+
+  for (let i in tones) {
+    const tone: string = tones[i]
+
+    toneSelect.innerHTML += (`
+      <option value="${tone}">${tone}</option>
+    `)
+  }
 }
 
 const buildUpload = function (): void {
@@ -121,5 +191,6 @@ const buildLoader = function (): void {
 
 buildSongList()
 buildTypeSelect()
+buildToneSelect()
 buildUpload()
 buildLoader()

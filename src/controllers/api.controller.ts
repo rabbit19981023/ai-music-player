@@ -127,6 +127,12 @@ export default {
       // Get origin Songs
       const songs: Song[] = await SongModel.find(filter)
 
+      // if '/v1/api/songs?order=<any value>' is set, directly return song-list without shuffle
+      if (req.query.order) {
+        res.json(songs)
+        return
+      }
+
       /** 亂數排序演算法: Fisher-Yates Shuffle (結果呈現"均勻分配") **/
       const shuffleSongs = function (songs: Song[]) {
         // 從最後一首歌開始跑，一直到第"二"首歌為止
@@ -202,10 +208,28 @@ export default {
   updateSong: async function (req: Request, res: Response): Promise<void> {
     const song: Song["data"] = req.body.song_data
     const filter = { "data.song_name": song.song_name }
-    const update = { "data.type": song.type }
+
+    type Updates = {
+      "data.type": string,
+      "data.tone": string,
+      "data.bpm": number
+    }
+    const updates: Updates = { } as Updates
 
     try {
-      const result: UpdateWriteOpResult = await SongModel.updateOne(filter, update)
+      if (song.type) {
+        updates["data.type"] = song.type
+      }
+
+      if (song.tone) {
+        updates["data.tone"] = song.tone
+      }
+
+      if (song.bpm) {
+        updates["data.bpm"] = parseInt(song.bpm as string)
+      }
+
+      const result: UpdateWriteOpResult = await SongModel.updateOne(filter, updates)
 
       if (result.nModified > 0) {
         res.json({ status: 'Done' })
