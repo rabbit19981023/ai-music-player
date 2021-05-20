@@ -12,8 +12,8 @@ export default {
     res.sendFile(path.resolve(__dirname, '../../assets/html/add-music.html'))
   },
 
-  // GET '/change-music-type'
-  changeMusicType: function (req: Request, res: Response): void {
-    res.sendFile(path.resolve(__dirname, '../../assets/html/change-music-type.html'))
+  // GET '/change-music-data'
+  changeMusicData: function (req: Request, res: Response): void {
+    res.sendFile(path.resolve(__dirname, '../../assets/html/change-music-data.html'))
   }
 }
