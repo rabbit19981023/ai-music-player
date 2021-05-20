@@ -108,7 +108,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         songName.textContent = currentSong.song_name
         singer.textContent = currentSong.singer
         songImg.src = currentSong.youtube_thumbnail
-        document.title = `${currentSong.song_name} - ${currentSong.singer}`
+        document.title = `${currentSong.song_name} | ${currentSong.singer} - AI音祢而在`
 
         // 'Audio.loaded-metadata' Event Listener
         const buildSongMeta: EventListener = function () {
@@ -185,7 +185,7 @@ const buildMusicPlayer = async function (): Promise<void> {
           songName.textContent = song.song_name
           singer.textContent = song.singer
           songImg.src = song.youtube_thumbnail
-          document.title = `${song.song_name} - ${song.singer}`
+          document.title = `${song.song_name} | ${song.singer} - AI音祢而在`
         }
 
         // 'Audio.ended' Event Listener
