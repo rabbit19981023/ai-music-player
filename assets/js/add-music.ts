@@ -1,6 +1,6 @@
 import Loader from './components/loader.js'
 
-type Song = {
+type SongData = {
   song_name: string,
   type: string,
   genre: string,
@@ -31,12 +31,12 @@ const buildUpload = function (): void {
 
       // Upload music to API server
       const response = await fetch('http://163.18.42.232:8000/add_music', config)
-      const apiData: Song = await response.json()
+      const apiData: SongData = await response.json()
 
       switch (apiData.status) {
         case 'Done':
           // add song data into MongoDB
-          const addSong = async function (song: Song): Promise<void> {
+          const addSong = async function (song: SongData): Promise<void> {
             const config = {
               method: 'POST',
               headers: {

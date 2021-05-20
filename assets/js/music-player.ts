@@ -1,5 +1,5 @@
 const buildMusicPlayer = async function (): Promise<void> {
-  type Song = {
+  type SongDoc = {
     _id: string
     data: {
       song_name: string,
@@ -20,11 +20,11 @@ const buildMusicPlayer = async function (): Promise<void> {
   }
 
   // Get All Hymns
-  const getSongs = async function (): Promise<Song[]> {
+  const getSongs = async function (): Promise<SongDoc[]> {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch('/v1/api/songs' + window.location.search)
-        const songs: Song[] = await response.json()
+        const songs: SongDoc[] = await response.json()
 
         resolve(songs)
       } catch (err) { reject(err) }
@@ -32,7 +32,7 @@ const buildMusicPlayer = async function (): Promise<void> {
   }
 
   try {
-    const songs: Song[] = await getSongs()
+    const songs: SongDoc[] = await getSongs()
 
     // Div.song-info
     const buildSongInfo = function (): HTMLDivElement {
@@ -102,7 +102,7 @@ const buildMusicPlayer = async function (): Promise<void> {
 
         // Music-Player Init
         let songCount: number = 0
-        const currentSong: Song["data"] = songs[songCount].data
+        const currentSong: SongDoc["data"] = songs[songCount].data
 
         audio.src = 'http://163.18.42.232:8000/play?filename=' + currentSong.path
         songName.textContent = currentSong.song_name
@@ -179,7 +179,7 @@ const buildMusicPlayer = async function (): Promise<void> {
         playBtn.addEventListener('click', playSong)
 
         // ChangeSong Function
-        const changeSong = function (song: Song["data"]) {
+        const changeSong = function (song: SongDoc["data"]) {
           audio.src = 'http://163.18.42.232:8000/play?filename=' + song.path
           songName.textContent = song.song_name
           singer.textContent = song.singer
@@ -195,7 +195,7 @@ const buildMusicPlayer = async function (): Promise<void> {
             songCount = 0
           }
 
-          const song: Song["data"] = songs[songCount].data
+          const song: SongDoc["data"] = songs[songCount].data
           changeSong(song)
           audio.play()
         }
@@ -210,7 +210,7 @@ const buildMusicPlayer = async function (): Promise<void> {
             songCount = songs.length - 1
           }
 
-          const song: Song["data"] = songs[songCount].data
+          const song: SongDoc["data"] = songs[songCount].data
           changeSong(song)
 
           isPlaying = false
@@ -227,7 +227,7 @@ const buildMusicPlayer = async function (): Promise<void> {
             songCount = 0
           }
 
-          const song: Song["data"] = songs[songCount].data
+          const song: SongDoc["data"] = songs[songCount].data
           changeSong(song)
 
           isPlaying = false

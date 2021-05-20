@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { UpdateWriteOpResult } from 'mongoose'
 import fetch from 'node-fetch'
 
-import SongModel, { SongData, Song } from '../models/songs'
+import SongModel, { SongData, SongDoc } from '../models/songs'
 
 export default {
   // GET '/v1/api/types/all'
@@ -125,7 +125,7 @@ export default {
       }
 
       // Get origin Songs
-      const songs: Song[] = await SongModel.find(filter)
+      const songs: SongDoc[] = await SongModel.find(filter)
 
       // if '/v1/api/songs?order=<any value>' is set, directly return song-list without shuffle
       if (req.query.order) {
@@ -134,7 +134,7 @@ export default {
       }
 
       /** 亂數排序演算法: Fisher-Yates Shuffle (結果呈現"均勻分配") **/
-      const shuffleSongs = function (songs: Song[]) {
+      const shuffleSongs = function (songs: SongDoc[]) {
         // 從最後一首歌開始跑，一直到第"二"首歌為止
         // 每次迴圈，都讓"目前"的歌跟"前方隨機"一首歌交換位置
         for (let current: number = songs.length - 1; current > 0; current--) {
@@ -193,7 +193,7 @@ export default {
     song.youtube_thumbnail = `https://i.ytimg.com/vi/${id}/sddefault.jpg`
 
     try {
-      const result: Song | null = await SongModel.addOne(song)
+      const result: SongDoc | null = await SongModel.addOne(song)
 
       if (result) {
         res.json({ status: 'Done' })
@@ -206,7 +206,7 @@ export default {
 
   // PATCH '/v1/api/songs'
   updateSong: async function (req: Request, res: Response): Promise<void> {
-    const song: Song["data"] = req.body.song_data
+    const song: SongDoc["data"] = req.body.song_data
     const filter = { "data.song_name": song.song_name }
 
     type Updates = {

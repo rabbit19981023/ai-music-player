@@ -15,7 +15,7 @@ export type SongData = {
   status: string
 }
 
-export interface Song extends Document {
+export interface SongDoc extends Document {
   data: SongData,
   status: string
 }
@@ -27,40 +27,40 @@ const SongSchema: Schema = new Schema({
 })
 
 // compiling our schema to a Data Model
-const SongModel: Model<Song> = mongoose.model('songs', SongSchema)
+const SongModel: Model<SongDoc> = mongoose.model('songs', SongSchema)
 
-const find = async function (filter: object): Promise<Song[]> {
+const find = async function (filter: object): Promise<SongDoc[]> {
   return new Promise(async (resolve, reject) => {
     try {
-      const songs: Song[] = await SongModel.find(filter)
+      const songs: SongDoc[] = await SongModel.find(filter)
       resolve(songs)
     } catch (err) { reject(err) }
   })
 }
 
-const findOne = async function (filter: object): Promise<Song | null> {
+const findOne = async function (filter: object): Promise<SongDoc | null> {
   return new Promise(async (resolve, reject) => {
     try {
-      const song: Song | null = await SongModel.findOne(filter)
+      const song: SongDoc | null = await SongModel.findOne(filter)
       resolve(song)
     } catch (err) { reject(err) }
   })
 }
 
-const addOne = async function (song: SongData): Promise<Song | null> {
+const addOne = async function (song: SongData): Promise<SongDoc | null> {
   return new Promise(async (resolve, reject) => {
     try {
-      const existSong: Song | null = await SongModel.findOne({
+      const existSong: SongDoc | null = await SongModel.findOne({
         "data.song_name": song.song_name
       })
 
       if (existSong === null) {
-        const newSong: Song = new SongModel({
+        const newSong: SongDoc = new SongModel({
           data: song,
           status: 'Done'
         })
 
-        const songDoc: Song = await newSong.save()
+        const songDoc: SongDoc = await newSong.save()
         resolve(songDoc)
         return
       }

@@ -1,7 +1,7 @@
 import Loader from './components/loader.js'
 import createTypeSelect from './helpers/typeSelect.js'
 
-type Song = {
+type SongDoc = {
   _id: string
   data: {
     song_name: string,
@@ -24,11 +24,11 @@ type Song = {
 const buildSongList = async function (): Promise<void> {
   try {
     const response = await fetch('/v1/api/songs?order=true')
-    const songs: Song[] = await response.json()
+    const songs: SongDoc[] = await response.json()
 
     const dataList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
     for (let i in songs) {
-      const song: Song["data"] = songs[i].data
+      const song: SongDoc["data"] = songs[i].data
 
       dataList.innerHTML += (`
         <option value="${song.song_name}">
@@ -39,7 +39,7 @@ const buildSongList = async function (): Promise<void> {
   const updateData = async function (): Promise<void> {
     try {
       const response = await fetch('/v1/api/songs?order=true')
-      const songs: Song[] = await response.json()
+      const songs: SongDoc[] = await response.json()
 
       const songList: string[] = []
       for (let i in songs) {
@@ -54,7 +54,7 @@ const buildSongList = async function (): Promise<void> {
       const updateData: EventListener = function () {
         try {
           const index = songList.indexOf(songName.value)
-          const song: Song["data"] = songs[index].data
+          const song: SongDoc["data"] = songs[index].data
 
           songType.value = song.type
           songTone.value = song.tone
@@ -128,12 +128,12 @@ const buildUpload = function (): void {
       loader.classList.add('active')
 
       const response = await fetch('', config)
-      const apiData: Song["data"] = await response.json()
+      const apiData: SongDoc["data"] = await response.json()
 
       switch (apiData.status) {
         case 'Done':
           // update song data into MongoDB
-          const updateSong = async function (song: Song["data"]): Promise<void> {
+          const updateSong = async function (song: SongDoc["data"]): Promise<void> {
             const config = {
               method: 'PATCH', // update specific song's data_field (data_field: type)
               headers: {
