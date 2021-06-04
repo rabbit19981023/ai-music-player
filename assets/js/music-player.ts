@@ -19,7 +19,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     _v: string
   }
 
-  // Get All Hymns
+  // Get Hymns with Condition Filter
   const getSongs = async function (): Promise<SongDoc[]> {
     return new Promise(async (resolve, reject) => {
       try {

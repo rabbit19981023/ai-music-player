@@ -74,7 +74,7 @@ export default {
     res.json(tones)
   },
 
-  // GET '/v1/api/songs'
+  // GET '/v1/api/songs?<Condition Filter>'
   getSongs: async function (req: Request, res: Response): Promise<void> {
     type Filter = {
       "data.type": string,
