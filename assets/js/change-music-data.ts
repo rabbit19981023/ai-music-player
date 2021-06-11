@@ -22,9 +22,11 @@ type SongDoc = {
 }
 
 const buildSongList = async function (): Promise<void> {
+  let response: Response, songs: SongDoc[]
+
   try {
-    const response = await fetch('/v1/api/songs?order=true')
-    const songs: SongDoc[] = await response.json()
+    response = await fetch('/v1/api/songs?order=true')
+    songs = await response.json()
 
     const dataList: HTMLDataListElement = document.querySelector('#songs') as HTMLDataListElement
     for (let i in songs) {
@@ -38,9 +40,6 @@ const buildSongList = async function (): Promise<void> {
 
   const updateData = async function (): Promise<void> {
     try {
-      const response = await fetch('/v1/api/songs?order=true')
-      const songs: SongDoc[] = await response.json()
-
       const songList: string[] = []
       for (let i in songs) {
         songList.push(songs[i].data.song_name)
@@ -127,7 +126,7 @@ const buildUpload = function (): void {
       const loader: HTMLDivElement = document.querySelector('.loader-wrapper') as HTMLDivElement
       loader.classList.add('active')
 
-      const response = await fetch('', config)
+      const response = await fetch('', config) ////////////////////// 等佑昇給API網址
       const apiData: SongDoc["data"] = await response.json()
 
       switch (apiData.status) {
@@ -163,18 +162,18 @@ const buildUpload = function (): void {
 
           await updateSong(apiData)
           // Redirect
-          window.location.href = '/change-music-type'
+          window.location.href = '/change-music-data'
           break
         case 'Error':
           window.alert('上傳失敗：請確認表單是否填寫正確！')
           // Redirect
-          window.location.href = '/change-music-type'
+          window.location.href = '/change-music-data'
           break
       }
     } catch (err) {
       window.alert('無法連線伺服器1，請重上傳一次！')
       // Redirect
-      window.location.href = '/change-music-type'
+      window.location.href = '/change-music-data'
     }
   }
 

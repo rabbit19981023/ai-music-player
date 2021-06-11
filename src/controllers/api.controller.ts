@@ -101,7 +101,7 @@ export default {
         const tones: string[] = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         const index: number = parseInt(tone)
 
-        const pattern: string = `${tones[index]},` // be aware of ',' !!
+        const pattern: string = `${tones[index]},` // be aware of ','!!!
         const regex: RegExp = new RegExp(pattern, 'g')
 
         filter["data.tone"] = {
@@ -138,7 +138,7 @@ export default {
         // 從最後一首歌開始跑，一直到第"二"首歌為止
         // 每次迴圈，都讓"目前"的歌跟"前方隨機"一首歌交換位置
         for (let current: number = songs.length - 1; current > 0; current--) {
-          const previous: number = Math.floor(Math.random() * (current + 1));
+          const previous: number = Math.floor(Math.random() * current);
 
           // Swap current-song and previous-song
           [songs[current], songs[previous]] = [songs[previous], songs[current]]
