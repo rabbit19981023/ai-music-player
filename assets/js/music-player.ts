@@ -22,8 +22,9 @@ const buildMusicPlayer = async function (): Promise<void> {
   // Get Hymns with Condition Filter
   const getSongs = async function (): Promise<SongDoc[]> {
     return new Promise(async (resolve, reject) => {
+      const filter: string = window.location.search
       try {
-        const response = await fetch('/v1/api/songs' + window.location.search)
+        const response = await fetch('/v1/api/songs' + filter)
         const songs: SongDoc[] = await response.json()
 
         resolve(songs)
@@ -239,23 +240,53 @@ const buildMusicPlayer = async function (): Promise<void> {
       }
     }
 
-    const buildSongList = function () {
-      
+    const buildListToggle = function (): HTMLDivElement {
+      const toggle: HTMLDivElement = document.createElement('div') as HTMLDivElement
+      toggle.classList.add('song-list-toggle')
+
+      toggle.innerHTML = (`
+        <i class="fas fa-chevron-circle-left"></i>
+      `)
+
+      return toggle
+    }
+
+    const buildSongList = async function (): Promise<HTMLDivElement> {
+      const songList: HTMLDivElement = document.createElement('div') as HTMLDivElement
+      songList.classList.add('song-list')
+
+      const songs: SongDoc[] = await getSongs()
+
+      for (let i in songs) {
+        const song: SongDoc["data"] = songs[i].data
+        songList.innerHTML += (`
+          <div class="each-song">
+            <div class="each-song-name">${song.song_name}</div>
+            <div class="each-song-singer">${song.singer}</div>
+          </div>
+        `)
+      }
+
+      return songList
     }
 
     const songInfo: HTMLDivElement = buildSongInfo()
     const timeRange: HTMLDivElement = buildTimeRange()
     const songControls: HTMLDivElement = buildSongControls()
+    const listToggle: HTMLDivElement = buildListToggle()
+    const songList: HTMLDivElement = await buildSongList()
 
     const musicPlayer: HTMLDivElement = document.createElement('div')
     musicPlayer.classList.add('music-player')
     musicPlayer.appendChild(songInfo)
     musicPlayer.appendChild(timeRange)
     musicPlayer.appendChild(songControls)
+    musicPlayer.appendChild(listToggle)
+    musicPlayer.appendChild(songList)
 
     const container: HTMLDivElement = document.querySelector('.container') as HTMLDivElement
     container.appendChild(musicPlayer)
-    
+
     buildAudio()
   } catch (err) { window.alert('伺服器錯誤2，請稍後再試！') }
 }

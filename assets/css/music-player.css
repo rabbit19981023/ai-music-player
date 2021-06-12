@@ -10,10 +10,12 @@ body {
 
 .music-player {
   position: fixed;
-  background-color: #ead0d196;
   padding: 40px;
   width: 100vw;
   height: 100vh;
+  background-color: #ead0d196;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 span,

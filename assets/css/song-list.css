@@ -1,0 +1,69 @@
+.song-list {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ead0d1;
+  border-radius: 5px;
+  opacity: 0;
+  transition: 0.25s;
+  z-index: 1000;
+}
+
+.song-list:hover {
+  opacity: 1;
+}
+
+@media screen and (min-width: 576px) {
+  .song-list {
+    width: 40vw;
+    height: 60vh;
+  }
+}
+
+@media screen and (min-width: 768.99px) {
+  .song-list {
+    width: 25vw;
+    height: 70vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .song-list {
+    width: 35vw;
+    height: 80vh;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .song-list {
+    width: 25vw;
+    height: 70vh;
+  }
+}
+
+
+.song-list-toggle i {
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  font-size: 24px;
+  z-index: 2000;
+}
+
+.each-song:first-child {
+  margin-top: 45px;
+  border-top: solid 1px #656565;
+}
+
+.each-song {
+  padding: 15px;
+  border-bottom: solid 1px #656565;
+  transition: 0.25s;
+}
+
+.each-song:hover {
+  cursor: pointer;
+  background-color: #656565;
+}
