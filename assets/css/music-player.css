@@ -21,7 +21,6 @@ body {
 span,
 i {
   color: #656565;
-  opacity: 1;
 }
 
 .song-img {
@@ -88,6 +87,7 @@ input[type="range"]::before {
 i {
   font-size: 26px;
   margin: 22px;
+  cursor: pointer;
 }
 
 .time-range {

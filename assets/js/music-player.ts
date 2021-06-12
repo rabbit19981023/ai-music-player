@@ -92,6 +92,8 @@ const buildMusicPlayer = async function (): Promise<void> {
         const playBtn: HTMLElement = document.querySelector('.play') as HTMLElement
         const preBtn: HTMLElement = document.querySelector('.pre') as HTMLElement
         const nextBtn: HTMLElement = document.querySelector('.next') as HTMLElement
+        const songListPlayBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.each-song-play') as NodeListOf<HTMLElement>
+
         const songRange: HTMLInputElement = document.querySelector('input[type="range"]') as HTMLInputElement
 
         const songName: HTMLSpanElement = document.querySelector('.song-name') as HTMLSpanElement
@@ -110,6 +112,10 @@ const buildMusicPlayer = async function (): Promise<void> {
         singer.textContent = currentSong.singer
         songImg.src = currentSong.youtube_thumbnail
         document.title = `${currentSong.song_name} | ${currentSong.singer} - AI音祢而在`
+
+        // Song-List Init
+        const currentSongInList: HTMLDivElement = document.querySelector(`#count-${songCount}`) as HTMLDivElement
+        currentSongInList.style.backgroundColor = '#65656580'
 
         // 'Audio.loaded-metadata' Event Listener
         const buildSongMeta: EventListener = function () {
@@ -165,20 +171,60 @@ const buildMusicPlayer = async function (): Promise<void> {
         // PlaySong Function
         let isPlaying: boolean = false
         const playSong = function () {
-          if (!isPlaying) {
-            playBtn.classList.remove('fa-play')
-            playBtn.classList.add('fa-pause')
-            audio.play()
-            isPlaying = true
+          if (isPlaying) {
+            /** Pause Song Playing **/
+            // Music Player Interface
+            playBtn.classList.remove('fa-pause')
+            playBtn.classList.add('fa-play')
+
+            // Songs List Interface
+            Array.from(songListPlayBtns, playBtn => {
+              playBtn.classList.remove('fa-pause-circle')
+              playBtn.classList.add('fa-play-circle')
+            })
+
+            // Pause Song
+            audio.pause()
+            isPlaying = false
             return
           }
 
-          playBtn.classList.remove('fa-pause')
-          playBtn.classList.add('fa-play')
-          audio.pause()
-          isPlaying = false
+          /** Song Playing **/
+          // Music Player Interface
+          playBtn.classList.remove('fa-play')
+          playBtn.classList.add('fa-pause')
+
+          // Songs List Interface
+          const currentPlayBtn: HTMLElement = (document.querySelector(`#count-${songCount}`) as HTMLDivElement).querySelector('.each-song-play') as HTMLElement
+          currentPlayBtn.classList.remove('fa-play-circle')
+          currentPlayBtn.classList.add('fa-pause-circle')
+
+          // Play Song
+          audio.play()
+          isPlaying = true
         }
         playBtn.addEventListener('click', playSong)
+
+        const playCurrentSong: EventListener = function (event) {
+          const currentPlayBtn: HTMLElement = event.target as HTMLElement
+          // Play Different Song
+          if (currentPlayBtn.classList.contains('fa-play-circle')) {
+            songCount = parseInt((currentPlayBtn.parentElement as HTMLDivElement).id.split('-')[1])
+
+            const song: SongDoc["data"] = songs[songCount].data
+            changeSong(song)
+
+            isPlaying = false
+            playSong()
+            return
+          }
+
+          // Pause Same Song
+          playSong()
+        }
+        Array.from(songListPlayBtns, playBtn => {
+          playBtn.addEventListener('click', playCurrentSong)
+        })
 
         // ChangeSong Function
         const changeSong = function (song: SongDoc["data"]) {
@@ -187,6 +233,17 @@ const buildMusicPlayer = async function (): Promise<void> {
           singer.textContent = song.singer
           songImg.src = song.youtube_thumbnail
           document.title = `${song.song_name} | ${song.singer} - AI音祢而在`
+
+          // All btn-play in songList show 'paused'
+          Array.from(songListPlayBtns, playBtn => {
+            playBtn.classList.remove('fa-pause-circle')
+            playBtn.classList.add('fa-play-circle')
+          })
+    
+          // only make btn-current-play in songList show 'playing'
+          const currentPlayBtn: HTMLElement = (document.querySelector(`#count-${songCount}`) as HTMLDivElement).querySelector('.each-song-play') as HTMLElement
+          currentPlayBtn.classList.remove('fa-play-circle')
+          currentPlayBtn.classList.add('fa-pause-circle')
         }
 
         // 'Audio.ended' Event Listener
@@ -200,7 +257,9 @@ const buildMusicPlayer = async function (): Promise<void> {
 
           const song: SongDoc["data"] = songs[songCount].data
           changeSong(song)
-          audio.play()
+          
+          isPlaying = false
+          playSong()
         }
         audio.addEventListener('ended', songEnd)
 
@@ -245,26 +304,38 @@ const buildMusicPlayer = async function (): Promise<void> {
       toggle.classList.add('song-list-toggle')
 
       toggle.innerHTML = (`
-        <i class="fas fa-chevron-circle-left"></i>
+        <i class="fas fa-chevron-circle-left btn-toggle"></i>
       `)
+
+      const toggleList: EventListener = function () {
+        const toggleBtn: HTMLElement = document.querySelector('.btn-toggle') as HTMLElement
+        const songList: HTMLDivElement = document.querySelector('.song-list') as HTMLDivElement
+
+        toggleBtn.classList.toggle('fa-chevron-circle-right')
+        songList.classList.toggle('song-list-active')
+      }
+      toggle.addEventListener('click', toggleList)
 
       return toggle
     }
 
-    const buildSongList = async function (): Promise<HTMLDivElement> {
+    const buildSongList = function () {
       const songList: HTMLDivElement = document.createElement('div') as HTMLDivElement
       songList.classList.add('song-list')
 
-      const songs: SongDoc[] = await getSongs()
-
+      let songCount: number = 0
       for (let i in songs) {
         const song: SongDoc["data"] = songs[i].data
+
         songList.innerHTML += (`
-          <div class="each-song">
+          <div id="count-${songCount}" class="each-song">
             <div class="each-song-name">${song.song_name}</div>
             <div class="each-song-singer">${song.singer}</div>
+            <i class="far fa-play-circle each-song-play"></i>
           </div>
         `)
+
+        songCount += 1
       }
 
       return songList
@@ -274,7 +345,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     const timeRange: HTMLDivElement = buildTimeRange()
     const songControls: HTMLDivElement = buildSongControls()
     const listToggle: HTMLDivElement = buildListToggle()
-    const songList: HTMLDivElement = await buildSongList()
+    const songList: HTMLDivElement = buildSongList()
 
     const musicPlayer: HTMLDivElement = document.createElement('div')
     musicPlayer.classList.add('music-player')
