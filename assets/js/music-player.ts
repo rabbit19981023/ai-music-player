@@ -89,10 +89,10 @@ const buildMusicPlayer = async function (): Promise<void> {
         const audio: HTMLAudioElement = new Audio()
 
         // Declare Variables
+        // Music-player Vars
         const playBtn: HTMLElement = document.querySelector('.play') as HTMLElement
         const preBtn: HTMLElement = document.querySelector('.pre') as HTMLElement
         const nextBtn: HTMLElement = document.querySelector('.next') as HTMLElement
-        const songListPlayBtns: NodeListOf<HTMLElement> = document.querySelectorAll('.each-song-play') as NodeListOf<HTMLElement>
 
         const songRange: HTMLInputElement = document.querySelector('input[type="range"]') as HTMLInputElement
 
@@ -103,6 +103,11 @@ const buildMusicPlayer = async function (): Promise<void> {
         const currentTime: HTMLSpanElement = document.querySelector('.current-time') as HTMLSpanElement
         const songTime: HTMLSpanElement = document.querySelector('.song-time') as HTMLSpanElement
 
+        // Song-List Vars
+        const songList: HTMLDivElement = document.querySelector('.song-list') as HTMLDivElement
+        const songsInList: NodeListOf<HTMLDivElement> = songList.querySelectorAll('.each-song') as NodeListOf<HTMLDivElement>
+        const songListPlayBtns: HTMLElement[] = Array.from(songsInList, song => song.querySelector('.each-song-play') as HTMLElement)
+
         // Music-Player Init
         let songCount: number = 0
         const currentSong: SongDoc["data"] = songs[songCount].data
@@ -112,10 +117,6 @@ const buildMusicPlayer = async function (): Promise<void> {
         singer.textContent = currentSong.singer
         songImg.src = currentSong.youtube_thumbnail
         document.title = `${currentSong.song_name} | ${currentSong.singer} - AI音祢而在`
-
-        // Song-List Init
-        const currentSongInList: HTMLDivElement = document.querySelector(`#count-${songCount}`) as HTMLDivElement
-        currentSongInList.style.backgroundColor = '#65656580'
 
         // 'Audio.loaded-metadata' Event Listener
         const buildSongMeta: EventListener = function () {
@@ -182,6 +183,9 @@ const buildMusicPlayer = async function (): Promise<void> {
               playBtn.classList.remove('fa-pause-circle')
               playBtn.classList.add('fa-play-circle')
             })
+            Array.from(songsInList, song => {
+              song.style.backgroundColor = '#ead0d1'
+            })
 
             // Pause Song
             audio.pause()
@@ -195,9 +199,20 @@ const buildMusicPlayer = async function (): Promise<void> {
           playBtn.classList.add('fa-pause')
 
           // Songs List Interface
-          const currentPlayBtn: HTMLElement = (document.querySelector(`#count-${songCount}`) as HTMLDivElement).querySelector('.each-song-play') as HTMLElement
+          // All btn-play in songList show 'paused'
+          Array.from(songListPlayBtns, playBtn => {
+            playBtn.classList.remove('fa-pause-circle')
+            playBtn.classList.add('fa-play-circle')
+          })
+          // All div.each-song in songList set background-color to #ead0d1
+          Array.from(songsInList, song => {
+            song.style.backgroundColor = '#ead0d1'
+          })
+          const currentSongInList: HTMLDivElement = songList.querySelector(`#count-${songCount}`) as HTMLDivElement
+          const currentPlayBtn: HTMLElement = currentSongInList.querySelector('.each-song-play') as HTMLElement
           currentPlayBtn.classList.remove('fa-play-circle')
           currentPlayBtn.classList.add('fa-pause-circle')
+          currentSongInList.style.backgroundColor = '#65656580'
 
           // Play Song
           audio.play()
@@ -233,17 +248,6 @@ const buildMusicPlayer = async function (): Promise<void> {
           singer.textContent = song.singer
           songImg.src = song.youtube_thumbnail
           document.title = `${song.song_name} | ${song.singer} - AI音祢而在`
-
-          // All btn-play in songList show 'paused'
-          Array.from(songListPlayBtns, playBtn => {
-            playBtn.classList.remove('fa-pause-circle')
-            playBtn.classList.add('fa-play-circle')
-          })
-    
-          // only make btn-current-play in songList show 'playing'
-          const currentPlayBtn: HTMLElement = (document.querySelector(`#count-${songCount}`) as HTMLDivElement).querySelector('.each-song-play') as HTMLElement
-          currentPlayBtn.classList.remove('fa-play-circle')
-          currentPlayBtn.classList.add('fa-pause-circle')
         }
 
         // 'Audio.ended' Event Listener
@@ -359,7 +363,7 @@ const buildMusicPlayer = async function (): Promise<void> {
     container.appendChild(musicPlayer)
 
     buildAudio()
-  } catch (err) { window.alert('伺服器錯誤2，請稍後再試！') }
+  } catch (err) { window.alert('伺服器錯誤2，請稍後再試！'); console.log(err) }
 }
 
 buildMusicPlayer()
