@@ -82,6 +82,51 @@ const buildMusicPlayer = async function (): Promise<void> {
       return songControls
     }
 
+    const buildListToggle = function (): HTMLDivElement {
+      const toggle: HTMLDivElement = document.createElement('div') as HTMLDivElement
+      toggle.classList.add('song-list-toggle')
+
+      toggle.innerHTML = (`
+        <i class="fas fa-chevron-circle-left btn-toggle"></i>
+      `)
+
+      const toggleList: EventListener = function () {
+        const toggleBtn: HTMLElement = document.querySelector('.btn-toggle') as HTMLElement
+        const songList: HTMLDivElement = document.querySelector('.song-list') as HTMLDivElement
+
+        toggleBtn.classList.toggle('fa-chevron-circle-right')
+        songList.classList.toggle('song-list-active')
+      }
+      toggle.addEventListener('click', toggleList)
+
+      return toggle
+    }
+
+    const buildSongList = function () {
+      const songList: HTMLDivElement = document.createElement('div') as HTMLDivElement
+      songList.classList.add('song-list')
+      songList.innerHTML = (`
+        <div class="toggle-fixed"></div>
+      `)
+
+      let songCount: number = 0
+      for (let i in songs) {
+        const song: SongDoc["data"] = songs[i].data
+
+        songList.innerHTML += (`
+          <div id="count-${songCount}" class="each-song">
+            <div class="each-song-name">${song.song_name}</div>
+            <div class="each-song-singer">${song.singer}</div>
+            <i class="far fa-play-circle each-song-play"></i>
+          </div>
+        `)
+
+        songCount += 1
+      }
+
+      return songList
+    }
+
     /** Core Music-Player Features **/
     const buildAudio = function (): void {
       if (songs.length > 0) {
@@ -301,48 +346,6 @@ const buildMusicPlayer = async function (): Promise<void> {
         }
         nextBtn.addEventListener('click', playNextSong)
       }
-    }
-
-    const buildListToggle = function (): HTMLDivElement {
-      const toggle: HTMLDivElement = document.createElement('div') as HTMLDivElement
-      toggle.classList.add('song-list-toggle')
-
-      toggle.innerHTML = (`
-        <i class="fas fa-chevron-circle-left btn-toggle"></i>
-      `)
-
-      const toggleList: EventListener = function () {
-        const toggleBtn: HTMLElement = document.querySelector('.btn-toggle') as HTMLElement
-        const songList: HTMLDivElement = document.querySelector('.song-list') as HTMLDivElement
-
-        toggleBtn.classList.toggle('fa-chevron-circle-right')
-        songList.classList.toggle('song-list-active')
-      }
-      toggle.addEventListener('click', toggleList)
-
-      return toggle
-    }
-
-    const buildSongList = function () {
-      const songList: HTMLDivElement = document.createElement('div') as HTMLDivElement
-      songList.classList.add('song-list')
-
-      let songCount: number = 0
-      for (let i in songs) {
-        const song: SongDoc["data"] = songs[i].data
-
-        songList.innerHTML += (`
-          <div id="count-${songCount}" class="each-song">
-            <div class="each-song-name">${song.song_name}</div>
-            <div class="each-song-singer">${song.singer}</div>
-            <i class="far fa-play-circle each-song-play"></i>
-          </div>
-        `)
-
-        songCount += 1
-      }
-
-      return songList
     }
 
     const songInfo: HTMLDivElement = buildSongInfo()

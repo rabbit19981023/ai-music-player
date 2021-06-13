@@ -6,6 +6,7 @@
   height: 100%;
   background-color: #ead0d1;
   border-radius: 5px;
+  overflow-x: hidden;
   overflow-y: auto;
   transition: 0.35s;
   transform: translateX(100%);
@@ -14,6 +15,10 @@
 
 .song-list-active {
   transform: translateX(0%);
+}
+
+.song-list::-webkit-scrollbar {
+  display: none;
 }
 
 .song-list-toggle i {
@@ -25,15 +30,20 @@
   z-index: 2000;
 }
 
-.each-song:first-child {
-  margin-top: 50px;
-  border-top: solid 1px #656565;
+.toggle-fixed {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #ead0d1;
+  border-bottom: solid 1px #6565654d;
+  z-index: 1001;
 }
 
 .each-song {
   position: relative;
   padding: 15px;
-  border-bottom: solid 1px #656565;
+  border-bottom: solid 1px #65656580;
   transition: 0.25s;
 }
 
@@ -44,7 +54,7 @@
 }
 
 .each-song-singer {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 550;
   color: #656565;
   opacity: 0.8;
