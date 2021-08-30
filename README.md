@@ -52,7 +52,7 @@ This is a AI-driven music website, which is one of my school-project.
 
 2. 上傳音檔，給AI自動判斷( 曲風、節拍、調性、關鍵字等 )
 
-3. 上傳、儲存音檔，並提供音樂串流
+3. 提供音樂串流
 
 4. 取得AI判斷後的結果，存入資料庫
 
@@ -60,7 +60,7 @@ This is a AI-driven music website, which is one of my school-project.
 
 6. 產生播放清單( 隨機播放順序 )
 
-7. 用原生 HTML/CSS/JavaScript 純手刻的音樂播放器
+7. 整個網站都用原生 HTML/CSS/JavaScript + Bootstrap 純手刻
 
 ## Usage
 
